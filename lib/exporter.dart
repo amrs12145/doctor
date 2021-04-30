@@ -5,3 +5,4 @@ export 'pre.dart';
 export 'screens/more.dart';
 export 'package:doctor/screens/people.dart';
 export 'package:doctor/screens/add.dart';
+export 'package:provider/provider.dart';

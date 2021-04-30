@@ -6,7 +6,8 @@ class People {
   String name, description, work, gps, home;
 
   People(
-      {this.image,
+      {
+      this.image,
       this.name,
       this.description = 'Professor at XYZ University\nMBBS,FCPC',
       this.work = 'Hospital Punla Pacifica, USA.',
