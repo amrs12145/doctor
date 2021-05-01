@@ -58,7 +58,8 @@ class _AddState extends State<Add> {
                     phone: 404,
                     home: home,
               );
-
+            Navigator.pop(context);
+            
             }),
       ],
     ));

@@ -32,7 +32,7 @@ class Screen1 extends StatelessWidget {
         MyExperience(Icons.home, Colors.green, _people.home),
         MyExperience(Icons.phone, Colors.black,
             _people.phone != null ? '0${_people.phone}' : '0'),
-        AA(),
+
 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -52,17 +52,7 @@ class Screen1 extends StatelessWidget {
   }
 }
 
-class AA extends StatelessWidget {
-  @override
-  Widget build(BuildContext contextBUTTON) {
-    return FlatButton(
-      onPressed: () {
-        Navigator.pop(contextBUTTON);
-      },
-      child: Text('Click'),
-    );
-  }
-}
+
 
 class MyCard extends StatelessWidget {
   var _image;

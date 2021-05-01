@@ -28,7 +28,12 @@ class Contact extends StatelessWidget {
       actionPane: SlidableStrechActionPane(),
       actions: [
         Container(color: Colors.green),
-        Container(color: Colors.red),
+        TextButton(
+          onPressed: (){
+            Provider.of<PeopleModel>(contextCONTACT).removePeople( this._people );
+          }, 
+          child: Icon(Icons.delete) 
+        )
       ],/*
       secondaryActions: [
         Container(color: Colors.amber),

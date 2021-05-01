@@ -43,6 +43,12 @@ class PeopleModel extends ChangeNotifier
       notifyListeners();
   }
 
+  void removePeople( People object )
+  {
+    _people.remove( object );
+    notifyListeners();
+  }
+
   List<People> _people = <People>[
     People(
       image: AssetImage('assets/8.jpg'),
