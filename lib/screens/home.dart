@@ -7,11 +7,11 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext contextHome) {
     return ListView.builder(
-      itemCount: 50,
+      itemCount: Provider.of<PeopleModel>(contextHome).getLength ,
       itemBuilder: (context, i) {
         return Contact(
           //AssetImage('assets/${i+1}.jpg')
-          people[i],
+          Provider.of<PeopleModel>(contextHome).getPeople(i),
         );
       },
     );
@@ -29,14 +29,14 @@ class Contact extends StatelessWidget {
       actions: [
         Container(color: Colors.green),
         Container(color: Colors.red),
-      ],
+      ],/*
       secondaryActions: [
         Container(color: Colors.amber),
         Container(color: Colors.purple),
         Container(color: Colors.lime),
         Container(color: Colors.red),
         //Container(color: Colors.lime),
-      ],
+      ],*/
       child: FlatButton(
           padding: EdgeInsets.all(0),
           highlightColor: Colors.red,

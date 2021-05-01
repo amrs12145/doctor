@@ -77,12 +77,12 @@ class More extends StatelessWidget {
                   Column(
                     children: <Widget>[
                       Text(
-                        people[1].name,
+                        Provider.of<PeopleModel>(context).getPeople(1).name,
                         textAlign: TextAlign.start,
                         style: TextStyle(color: Colors.white, fontSize: 26),
                       ),
                       Text(
-                        people[1].description,
+                        Provider.of<PeopleModel>(context).getPeople(1).description,
                         textAlign: TextAlign.center,
                         style:
                             TextStyle(color: Color(0xff375c80), fontSize: 14),

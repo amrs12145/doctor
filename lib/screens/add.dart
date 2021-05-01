@@ -9,6 +9,7 @@ class _AddState extends State<Add> {
   var name = 'wait';
   var phone = 'wait';
   var home = 'wait';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,13 +49,16 @@ class _AddState extends State<Add> {
         RaisedButton(
             child: Text('Add Phone $phone'),
             onPressed: () {
-              people.add(People(
-                image: AssetImage('assets/model.jpg'),
-                name: name,
-                description: phone,
-                phone: 404,
-                home: home,
-              ));
+
+              Provider.of<PeopleModel>(context).addPeople(
+
+                    image: AssetImage('assets/model.jpg'),
+                    name: name,
+                    description: phone,
+                    phone: 404,
+                    home: home,
+              );
+
             }),
       ],
     ));

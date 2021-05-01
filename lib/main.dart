@@ -6,18 +6,21 @@ main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Doctor',
-      //home: PRE(Screen2()),
-      debugShowCheckedModeBanner: false,
-      initialRoute: 'home',
+    return ChangeNotifierProvider(
+      create: (context) => PeopleModel() ,
+        child: MaterialApp(
+          title: 'Doctor',
+          //home: PRE(Screen2()),
+          debugShowCheckedModeBanner: false,
+          initialRoute: 'home',
 
-      routes: {
-        'home': (home) => PRE(Home()),
-        //'screen1': (screen2)=> PRE(Screen1()),
-        'more': (saved) => More(),
-        'add': (add) => Add(),
-      },
+          routes: {
+            'home': (home) => PRE(Home()),
+            //'screen1': (screen2)=> PRE(Screen1()),
+            'more': (saved) => More(),
+            'add': (add) => Add(),
+          },
+        ),
     );
   }
 }
