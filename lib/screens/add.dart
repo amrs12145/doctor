@@ -50,16 +50,16 @@ class _AddState extends State<Add> {
             child: Text('Add Phone $phone'),
             onPressed: () {
 
-              Provider.of<PeopleModel>(context).addPeople(
+              Provider.of<PeopleModel>( context, listen: false ).addPeople(
 
                     image: AssetImage('assets/model.jpg'),
                     name: name,
-                    description: phone,
+                    description: 'Description' ,
                     phone: 404,
                     home: home,
               );
             Navigator.pop(context);
-            
+
             }),
       ],
     ));

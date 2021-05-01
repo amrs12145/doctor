@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 
 import '../exporter.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -30,7 +29,7 @@ class Contact extends StatelessWidget {
         Container(color: Colors.green),
         TextButton(
           onPressed: (){
-            Provider.of<PeopleModel>(contextCONTACT).removePeople( this._people );
+            Provider.of<PeopleModel>( contextCONTACT, listen: false ).removePeople( this._people );
           }, 
           child: Icon(Icons.delete) 
         )

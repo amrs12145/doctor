@@ -29,13 +29,13 @@ class PeopleModel extends ChangeNotifier
     return _people[i];
   }
 
-  void addPeople( { image , name , description , phone , home } )
+  void addPeople( { var image , String name , String description , int phone , String home } )
   {
     _people.add(  People(
           image: image,
           name: name,
           description: description,
-          phone: description,
+          phone: phone,
           home: home,
           )
       );
