@@ -1,4 +1,4 @@
-import '../exporter.dart';
+import 'package:doctor/exporter.dart';
 
 class People {
   var image;

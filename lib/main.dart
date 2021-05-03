@@ -6,9 +6,15 @@ main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => PeopleModel() ,
-        child: MaterialApp(
+    return MultiProvider(
+      providers: [
+        Provider(
+          create: (context) => PeopleModel() ,
+
+        )],
+
+      child: 
+        MaterialApp(
           title: 'Doctor',
           //home: PRE(Screen2()),
           debugShowCheckedModeBanner: false,
@@ -20,7 +26,8 @@ class MyApp extends StatelessWidget {
             'more': (saved) => More(),
             'add': (add) => Add(),
           },
-        ),
+      ),
+
     );
   }
 }

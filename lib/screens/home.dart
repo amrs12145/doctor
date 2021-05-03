@@ -6,11 +6,12 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext contextHome) {
     return ListView.builder(
-      itemCount: Provider.of<PeopleModel>(contextHome).getLength ,
+      itemCount: contextHome.watch<PeopleModel>().getLength ,
       itemBuilder: (context, i) {
         return Contact(
           //AssetImage('assets/${i+1}.jpg')
-          Provider.of<PeopleModel>(contextHome).getPeople(i),
+          //Provider.of<PeopleModel>(contextHome).getPeople(i),
+          context.watch<PeopleModel>().getPeople(i)
         );
       },
     );
@@ -25,22 +26,17 @@ class Contact extends StatelessWidget {
   Widget build(BuildContext contextCONTACT) {
     return Slidable(
       actionPane: SlidableStrechActionPane(),
-      actions: [
+      secondaryActions: [
         Container(color: Colors.green),
         TextButton(
           onPressed: (){
-            Provider.of<PeopleModel>( contextCONTACT, listen: false ).removePeople( this._people );
+            //Provider.of<PeopleModel>( contextCONTACT, listen: false ).removePeople( this._people );
+            contextCONTACT.read<PeopleModel>().removePeople( this._people );
           }, 
           child: Icon(Icons.delete) 
         )
-      ],/*
-      secondaryActions: [
-        Container(color: Colors.amber),
-        Container(color: Colors.purple),
-        Container(color: Colors.lime),
-        Container(color: Colors.red),
-        //Container(color: Colors.lime),
-      ],*/
+      ],
+
       child: FlatButton(
           padding: EdgeInsets.all(0),
           highlightColor: Colors.red,
