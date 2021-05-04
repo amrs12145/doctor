@@ -27,14 +27,22 @@ class Contact extends StatelessWidget {
     return Slidable(
       actionPane: SlidableStrechActionPane(),
       secondaryActions: [
+
         Container(color: Colors.green),
-        TextButton(
-          onPressed: (){
-            //Provider.of<PeopleModel>( contextCONTACT, listen: false ).removePeople( this._people );
-            contextCONTACT.read<PeopleModel>().removePeople( this._people );
-          }, 
-          child: Icon(Icons.delete) 
-        )
+
+        SlideAction(
+          closeOnTap: true,
+          child: TextButton(
+                  onPressed: (){
+                    //Provider.of<PeopleModel>( contextCONTACT, listen: false ).removePeople( this._people );
+                    contextCONTACT.read<PeopleModel>().removePeople( this._people );
+                  }, 
+                  child: Icon(Icons.delete) 
+                )
+
+        ),
+
+
       ],
 
       child: FlatButton(

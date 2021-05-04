@@ -8,10 +8,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(
+        ChangeNotifierProvider(
           create: (context) => PeopleModel() ,
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AppBarModel(),
+        ),
 
-        )],
+        ],
 
       child: 
         MaterialApp(
@@ -21,10 +25,12 @@ class MyApp extends StatelessWidget {
           initialRoute: 'home',
 
           routes: {
-            'home': (home) => PRE(Home()),
-            //'screen1': (screen2)=> PRE(Screen1()),
-            'more': (saved) => More(),
-            'add': (add) => Add(),
+            'home':   (home) => PRE(Home()),
+            'saved': (saved) => Saved(),
+            'add':   (add) => Add(),
+            'alert': (alert) => Alert(),
+            'more':  (saved) => More(),
+
           },
       ),
 
