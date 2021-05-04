@@ -40,7 +40,7 @@ class TRY2 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 MyFun(Icons.home, 'Home', 0 , fun: (){ Navigator.pushNamed(context, 'home');} ),
-                MyFun(Icons.save_alt, 'Saved', 1 ),
+                MyFun(Icons.save_alt, 'Saved', 1 /*, fun: (){ Navigator.pushNamed(context, 'home');}*/ ),
                 Container(child:FloatingActionButton(onPressed: (){Navigator.pushNamed(context, 'add');},child:Icon(Icons.add,color: Colors.white,),elevation: 50,) ,),
                 MyFun(Icons.add_alert, 'Alert' , 2 , fun: (){ Navigator.pushNamed(context, 'alert');} ),
                 MyFun(Icons.menu, 'More', 3 , fun: (){Navigator.pushNamed(context, 'more');} ),
@@ -59,9 +59,19 @@ class MyFun extends StatelessWidget
   IconData iconData;
   String text;
   int index;
+  static int indexx = 0;
   Function fun;
 
-  MyFun(this.iconData,this.text,this.index,{ this.fun });
+  MyFun(this.iconData,this.text,this.index,{ this.fun })
+  {
+    if ( MyFun.indexx == 4 )
+    {
+      MyFun.indexx =0;
+    }
+
+    index = MyFun.indexx;
+    MyFun.indexx++;
+  }
 
   /*  @override
   Widget build(BuildContext context)
@@ -72,7 +82,7 @@ class MyFun extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    context.read<AppBarModel>().setText( text );
+    //context.read<AppBarModel>().setText( this.text , this);
     return
       Container(
         width: 80,
@@ -80,13 +90,14 @@ class MyFun extends StatelessWidget
           //padding: EdgeInsets.all(0),
           onPressed: (){
             //fun!=null? fun() : text='Failed to call'/*Not Gonna work cuz reCalling build*/ ;
-            fun!=null? fun() : context.read<AppBarModel>().setText( 'Failed to call' ) ;
+            fun!=null? fun() : context.read<AppBarModel>().setText( 'Failed' , this ) ;
             //sel =  this.myFun ;
             //setState(
               //(){
                 //selected=index;
-                //context.read<AppBarModel>().setSelected( index );
-                context.read<AppBarModel>().setCurrentActive( this );
+                context.read<AppBarModel>().setSelected( index );
+                print(index);
+                //context.read<AppBarModel>().setCurrentActive( this );
               //});
 
           },
@@ -94,9 +105,9 @@ class MyFun extends StatelessWidget
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(iconData,
-                color: context.watch<AppBarModel>().isActive( this ) ?                             Colors.blue:Colors.grey,),
+                color: context.watch<AppBarModel>().getSelected == index ?                             Colors.blue:Colors.grey,),
 
-              Text( context.watch<AppBarModel>().getText ,style: TextStyle( color: context.watch<AppBarModel>().isActive( this ) ?     Colors.blue:Colors.grey),)
+              Text( context.watch<AppBarModel>().getText( this ) ,style: TextStyle( color: context.watch<AppBarModel>().isActive( this ) ?     Colors.blue:Colors.grey),)
             ],
           ),
         )

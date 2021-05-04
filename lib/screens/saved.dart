@@ -6,7 +6,7 @@ class Saved extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('Alert Page')
+        child: Text('Saved Page')
       )
     );
   }

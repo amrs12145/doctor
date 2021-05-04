@@ -7,7 +7,6 @@ class AppBarModel extends ChangeNotifier
 {
   int selected;
   MyFun active;
-  String text;
   
 
   void setSelected ( int i )
@@ -15,21 +14,23 @@ class AppBarModel extends ChangeNotifier
     this.selected = i;
     notifyListeners();
   }
-  void setText ( String s )
+  void setText ( String s , MyFun o )
   {
-    this.text =s;
+    o.text = s;
     notifyListeners();
   }
-
-  int get getSelected => this.selected!=null ? this.selected : -1 ;
-  String get getText => this.text;
-
 
   void setCurrentActive ( MyFun o )
   {
     active = o;
     notifyListeners();
   }
+  
+  int get getSelected => this.selected!=null ? this.selected : -1 ;
+  String getText ( MyFun o ) => o.text;
+
+
+
   bool isActive ( MyFun o )
   {
     if ( active == o  )
