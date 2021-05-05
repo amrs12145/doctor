@@ -1,4 +1,7 @@
-﻿import 'exporter.dart';
+﻿
+import 'exporter.dart';
+import 'package:doctor/data_models/notification.dart' as my;
+
 
 main() => runApp(MyApp());
 
@@ -8,12 +11,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+
         ChangeNotifierProvider(
           create: (context) => PeopleModel() ,
         ),
+
         ChangeNotifierProvider(
           create: (context) => AppBarModel(),
         ),
+
+        ChangeNotifierProvider(
+          create: (context) => my.NotificationModel(),
+        )
+
 
         ],
 
