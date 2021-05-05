@@ -25,10 +25,10 @@ class MyApp extends StatelessWidget {
           initialRoute: 'home',
 
           routes: {
-            'home':   (home) => PRE(Home()),
+            'home':   (home) => PRE( Home() ),
             'saved': (saved) => Saved(),
             'add':   (add) => Add(),
-            'alert': (alert) => Alert(),
+            'alert': (alert) => PRE( Alert() ),
             'more':  (saved) => More(),
 
           },

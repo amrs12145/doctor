@@ -5,7 +5,7 @@ import 'package:doctor/exporter.dart';
 
 class AppBarModel extends ChangeNotifier
 {
-  int selected;
+  int selected = 0;
   MyFun active;
   
 

@@ -13,8 +13,12 @@ class PRE extends StatelessWidget {
         appBar: AppBar(
           elevation: 20,
           title:Text('Profile'),
-          leading: IconButton(onPressed: (){Navigator.pop(contextPRE);}
-            ,icon:Icon(Icons.more_vert), ),
+          leading: IconButton(
+            onPressed: (){
+              contextPRE.read<AppBarModel>().setSelected( 0 );
+              Navigator.pop(contextPRE);
+            },
+            icon:Icon(Icons.more_vert), ),
           actions: <Widget>[Container(margin: EdgeInsets.only(right: 10) ,child: Icon(Icons.search,size: 30,))],
           centerTitle: true,
         ),

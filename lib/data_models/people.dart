@@ -88,7 +88,7 @@ class PeopleModel extends ChangeNotifier
     ),
     People(
       image: AssetImage('assets/5.jpg'),
-      name: 'Eng/ Mohamed Elsherief',
+      name: 'Eng/ Mohamed Elsher',
       description: 'Professor at XYZ University\nMBBS,FCPC',
       phone: 950224545,
       work: 'Hospital Punla Pacifica, USA.',
@@ -122,11 +122,11 @@ class PeopleModel extends ChangeNotifier
       name: 'Johny Mina',
     ),
     People(
-      image: AssetImage('assets/11.jpg'),
+      image: AssetImage('assets/5.jpg'),
       name: 'Johny Mina',
     ),
     People(
-      image: AssetImage('assets/12.jpg'),
+      image: AssetImage('assets/4.jpg'),
       name: 'Johny Mina',
     ),
   ];
