@@ -14,7 +14,10 @@ class Alert extends StatelessWidget {
           leading: Column(
             children: [
               notification.icon,
-              notification.image,
+              Image(
+                image: notification.image,
+                width: 50,
+              ),
             ],
           ),
           title: Text( notification.title ),
