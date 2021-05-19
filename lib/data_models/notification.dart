@@ -51,7 +51,7 @@ class NotificationModel extends ChangeNotifier
 
     Notification(
       icon: Icon(Icons.check_box),
-      image: AssetImage('assets/2.jpg'),
+      image: AssetImage('assets/5.jpg'),
       title: 'Flutter Team',
       description: 'Your appointment with dr. Lena Swan have been Cancelled',
       date: '15 jun'
