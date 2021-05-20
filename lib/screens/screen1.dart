@@ -11,7 +11,7 @@ class Screen1 extends StatelessWidget {
       //Column(crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         //MyCard( NetworkImage('https://api.time.com/wp-content/uploads/2014/07/301386_full1.jpg?w=800&quality=100') ,'Dr.Alina Sticra','Professor at MIT \n California,USA' ),
-        MyCard(_people.image, _people.name, _people.description),
+        _MyCard(_people.image, _people.name, _people.description),
 
         //MyCard( AssetImage('assets/1.jpg') ,'مهندس . عمار الحمار','شاب عشريني يعشق أكل البط ومال اليتيم \nبيقول معلش وشاطر' ),
         Row(
@@ -54,11 +54,11 @@ class Screen1 extends StatelessWidget {
 
 
 
-class MyCard extends StatelessWidget {
+class _MyCard extends StatelessWidget {
   var _image;
   String _name;
   String _description;
-  MyCard(this._image, this._name, this._description);
+  _MyCard(this._image, this._name, this._description);
 
   @override
   Widget build(BuildContext context) {

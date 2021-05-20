@@ -8,8 +8,9 @@ class Notification
   final image;
   final String title , description;
   final date;
+  bool pressed=false;
 
-  const Notification ({
+  Notification ({
     this.icon,
     this.image,
     this.title,
@@ -18,8 +19,10 @@ class Notification
   });
 }
 
+
 class NotificationModel extends ChangeNotifier
 {
+  
 
   int get getCount => _notifications.length;
   
