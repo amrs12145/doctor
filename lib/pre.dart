@@ -44,7 +44,7 @@ class TRY2 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 MyFun(Icons.home, 'Home', 0 , fun: (){ Navigator.pushNamed(context, 'home');} ),
-                MyFun(Icons.save_alt, 'Saved', 1 /*, fun: (){ Navigator.pushNamed(context, 'home');}*/ ),
+                MyFun(Icons.save_alt, 'Saved', 1 , fun: (){ Navigator.pushNamed(context, 'saved');} ),
                 Container(child:FloatingActionButton(onPressed: (){Navigator.pushNamed(context, 'add');},child:Icon(Icons.add,color: Colors.white,),elevation: 50,) ,),
                 MyFun(Icons.add_alert, 'Alert' , 2 , fun: (){ Navigator.pushNamed(context, 'alert');} ),
                 MyFun(Icons.menu, 'More', 3 , fun: (){Navigator.pushNamed(context, 'more');} ),

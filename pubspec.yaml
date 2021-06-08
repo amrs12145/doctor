@@ -17,9 +17,17 @@ dependencies:
   cupertino_icons: ^0.1.3
 
 
+  calculess: ^1.0.2
+  vector_math: ^2.1.0
+  math_expressions: ^2.1.1
+
+
+
+
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+
+#  flutter_test:
+#    sdk: flutter
 
 flutter:
   uses-material-design: true

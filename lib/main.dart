@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
 
           routes: {
             'home':   (home) => PRE( Home() ),
-            'saved': (saved) => Saved(),
+            'saved': (saved) => PRE(Saved() ),
             'add':   (add) => Add(),
             'alert': (alert) => PRE( Alert() ),
             'more':  (saved) => More(),
