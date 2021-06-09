@@ -9,6 +9,7 @@ import 'package:calculess/calculess.dart' as calculess;
 import 'package:vector_math/vector_math.dart' as vector_math;
 import 'package:math_expressions/math_expressions.dart';
 
+import 'curl.dart';
 import 'div.dart';
 import 'grad.dart';
 
@@ -83,6 +84,10 @@ class _CalculationsState extends State<Calculations> {
     else if ( widget._operation.name == 'Gradient' )
     {
       return MyGrad(widget._operation);
+    }
+    else if ( widget._operation.name == 'Curl' )
+    {
+      return MyCurl(widget._operation);
     }
 
     return ListView(
