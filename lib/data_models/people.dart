@@ -59,7 +59,7 @@ class PeopleModel extends ChangeNotifier
 List<People> operations = <People>[
 
     People(
-      image: AssetImage('assets/math1.png'),
+      image: AssetImage('assets/math2.png'),
       name: 'differentiation',
       description: 'Y = x^2 + Cos(x)',
       phone: 950 - 251 - 254,
@@ -69,7 +69,7 @@ List<People> operations = <People>[
     ),
 
     People(
-      image: AssetImage('assets/math2.png'),
+      image: AssetImage('assets/math1.png'),
       name: 'Integration',
       description: '∫ x^2 + Cos(x).dx',
       phone: 018895956654,
@@ -81,6 +81,15 @@ List<People> operations = <People>[
       image: AssetImage('assets/math3.png'),
       name: 'Vectors',
       description: '(x^2 i + xy j + xyz k).(yz i + xy j)',
+      work: 'Hospital Punla Pacifica, USA.',
+      phone: 0109569454,
+      gps: '1736 Adams Ave, Toms River, NJ,08753',
+      home: '1736 Adams Ave, Toms River, NJ,08753',
+    ),
+    People(
+      image: AssetImage('assets/math4.jpg'),
+      name: 'Gradient',
+      description: 'f = xyz',
       work: 'Hospital Punla Pacifica, USA.',
       phone: 0109569454,
       gps: '1736 Adams Ave, Toms River, NJ,08753',
@@ -106,7 +115,7 @@ List<People> operations = <People>[
 
 
     People(
-      image: AssetImage('assets/math6.png'),
+      image: AssetImage('assets/math6.gif'),
       name: 'Not implemented',
       description: 'under construction....',
       work: 'SIM.',

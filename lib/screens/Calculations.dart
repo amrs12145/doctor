@@ -9,6 +9,9 @@ import 'package:calculess/calculess.dart' as calculess;
 import 'package:vector_math/vector_math.dart' as vector_math;
 import 'package:math_expressions/math_expressions.dart';
 
+import 'div.dart';
+import 'grad.dart';
+
 
 
 
@@ -60,7 +63,7 @@ class _CalculationsState extends State<Calculations> {
   int start,end;
   void integrate( String s , int start ,int end )
   {
-    res =  s=='s' ? calculess.Calc.integral(start, end , (x) => math.sin(x) , 10000): res;
+    res =  s=='s' ? calculess.Calc.integral(start, end , (x) => math.sin(x) , 10): res;
     res=   s=='c' ? calculess.Calc.integral(start, end , (x) => math.cos(x) , 10000): res;
     res=   s=='t' ? calculess.Calc.integral(start, end , (x) => math.tan(x) , 10000): res;
     res=   s=='l' ? calculess.Calc.integral(start, end , (x) => math.log(x) , 10000): res;
@@ -72,8 +75,17 @@ class _CalculationsState extends State<Calculations> {
 
   @override
   Widget build(BuildContext context) {
-    
-    return Column(
+
+    if ( widget._operation.name == 'Divergence' )
+    {
+      return MyDiv(widget._operation);
+    }
+    else if ( widget._operation.name == 'Gradient' )
+    {
+      return MyGrad(widget._operation);
+    }
+
+    return ListView(
       children: [
 
         // Child num 1
@@ -81,7 +93,7 @@ class _CalculationsState extends State<Calculations> {
           
             height: 250,
             padding: EdgeInsets.all(25),
-            margin: EdgeInsets.only(left:90,top:30),
+            margin: EdgeInsets.all(50),
 
             child: Column(
               //crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,7 +134,7 @@ class _CalculationsState extends State<Calculations> {
         Column(
           children:[
 
-            Text(' Here is an example of the Calculator'),
+            //Text(' Here is an example of the Calculator'),
 
             TextField( 
               obscureText: false,  
@@ -169,6 +181,7 @@ class _CalculationsState extends State<Calculations> {
                 start = int.parse(string);
               },
             ),
+
             TextButton(
               child: Text('Click me'),
               onPressed: (){
@@ -179,6 +192,7 @@ class _CalculationsState extends State<Calculations> {
                 }
                 else if ( widget._operation.name == 'Integration' )
                 {
+                  print( eq[0] );
                   integrate( eq[0] , start , end );
                 }
                 
@@ -194,7 +208,8 @@ class _CalculationsState extends State<Calculations> {
                 'the expression is                  '  + expression + '\n' +
                 'the simple expression is           '  + simple_expression + '\n' +
                 'the Derived is                     '  + expression_Derived + '\n' +
-                'the simple Derived is              '  + simple_expression_Derived 
+                'the simple Derived is              '  + simple_expression_Derived + '\n' +
+                'the Result of integration is       '  + res.toString()
                 ),
             )
 
@@ -207,10 +222,4 @@ class _CalculationsState extends State<Calculations> {
 
   
   }
-}
-
-
-String status(int i)
-{
-  return i == 0 ? 'differentiation' : i==1 ?  'integration' : i==2 ? 'Vectors' : i==3 ? 'Divergence' : i==4?  'Curl' : 'Not Implemented';
 }
