@@ -180,10 +180,10 @@ class _CalculationsState extends State<Calculations> {
               ),
 
               onChanged: (string){
-                start = int.parse(string);
+                end = int.parse(string);
               },
               onSubmitted: (string){
-                start = int.parse(string);
+                end = int.parse(string);
               },
             ),
 
