@@ -1,24 +1,10 @@
 
 import 'package:doctor/exporter.dart';
 import 'package:doctor/data_models/notification.dart' as my;
+import 'package:doctor/data_models/bottomAppBar.dart' as my;
+import 'package:doctor/data_models/alert_press.dart';
 
-class Alert extends StatefulWidget {
-  @override
-  _AlertState createState() => _AlertState();
-}
-
-class _AlertState extends State<Alert> {
-  
-
-  bool listViewPressed = false;
-
-  void liftStateUp()
-  {
-    setState(() {
-      listViewPressed ? listViewPressed=false : listViewPressed=true;
-    });
-  }
-
+class Alert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +16,7 @@ class _AlertState extends State<Alert> {
           {
             my.Notification notification =  context.watch<my.NotificationModel>().getNotification( i );
 
-            return _MyCard( notification , liftStateUp , listViewPressed );
+            return _MyCard( notification );
 
           } ,
         ),
@@ -39,16 +25,18 @@ class _AlertState extends State<Alert> {
   }
 }
 
+
+
 class _MyCard extends StatelessWidget {
   
   my.Notification notification;
-  Function liftStateUp;
-  bool listViewPressed;
-  _MyCard( this.notification , this.liftStateUp , this.listViewPressed );
 
+  _MyCard( this.notification );
+  
 
   @override
   Widget build(BuildContext context) {
+
     return Row(
       children: [
 
@@ -57,32 +45,63 @@ class _MyCard extends StatelessWidget {
               
             },
             onLongPress: (){
-              liftStateUp();
-              if ( !listViewPressed )
-              {
-                Scaffold.of(context).showBottomSheet( (context){
-                  return Container(
-                    height: 80,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround ,
-                      children:[
-                        TextButton(
-                          child:Text('Confirm'),
-                          onPressed: (){
-                          },
-                        ),
-                        TextButton(
-                          child:Text('Cancel'),
-                          onPressed: (){
-                            liftStateUp();
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ]
-                    ),
-                  );
-                });
+
+                  if ( context.read<Alert_Press>().tmp == 0 )
+                  {
+                   
+                      context.read<Alert_Press>().tmp++;
+                      context.read<my.BottomAppBar>().close();
+                      Future.delayed(Duration(milliseconds: 500)).then((value) => context.read<Alert_Press>().open() );
+                      
+                        Scaffold.of(context).showBottomSheet( (context){
+
+                          return AnimatedContainer(
+                            duration: Duration(milliseconds: 500),
+                            height: context.watch<Alert_Press>().isListViewPressed ? 75 : 0,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround ,
+                              children:[
+                                TextButton(
+                                  child:Text('Confirm'),
+                                  onPressed: (){
+                                  },
+                                ),
+                                TextButton(
+                                  child:Text('Cancel'),
+                                  onPressed: (){
+                                    //liftStateUp();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ]
+                            ),
+                          );
+
+                        });
+
+
+
+                  }
+                  else
+                  {
+                    context.read<Alert_Press>().tmp++;
+                  }
+
+
+              if ( context.read<Alert_Press>().isListViewPressed  )
+              {print('1');
+                context.read<my.BottomAppBar>().close();
+                Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<Alert_Press>().open() );
+                Future.delayed(Duration(milliseconds: 1001)).then( (value) => context.read<Alert_Press>().toggle() );
               }
+              else if ( context.read<Alert_Press>().tmp++ !=1 )
+              {print('2');
+                context.read<Alert_Press>().close();
+                Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<my.BottomAppBar>().open() ); 
+                Future.delayed(Duration(milliseconds: 1001)).then( (value)=> context.read<Alert_Press>().toggle() );
+              }
+
+
 
             },
             style: ButtonStyle(
@@ -92,7 +111,9 @@ class _MyCard extends StatelessWidget {
               elevation: 1,
               //color: Colors.pink,
               child: Container(
-                width: listViewPressed ? MediaQuery.of(context).size.width-24-60 : MediaQuery.of(context).size.width-24,
+                width:  context.watch<Alert_Press>().isListViewPressed ?
+                          MediaQuery.of(context).size.width-24-60 : MediaQuery.of(context).size.width-24,
+                height: 90,
                 child: ListTile(
                   leading:
                     Stack(
@@ -118,7 +139,7 @@ class _MyCard extends StatelessWidget {
           ),
         ),
 
-        _MyCheckBox( listViewPressed )
+        _MyCheckBox()
         
       ]
     );
@@ -127,8 +148,7 @@ class _MyCard extends StatelessWidget {
 
 class _MyCheckBox extends StatefulWidget {
 
-  final bool listViewPressed;
-  const _MyCheckBox(this.listViewPressed);
+  const _MyCheckBox();
   @override
   __MyCheckBoxState createState() => __MyCheckBoxState();
 }
@@ -140,7 +160,7 @@ class __MyCheckBoxState extends State<_MyCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: widget.listViewPressed ? 50 : 0,
+      width: context.watch<Alert_Press>().isListViewPressed ? 50 : 0,
       child: IconButton(
         icon: pressed ? Icon( Icons.check_box,color:Colors.blueAccent  ) : Icon( Icons.check_box_outline_blank  ),
         //color:Colors.blueAccent,

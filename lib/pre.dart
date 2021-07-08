@@ -1,5 +1,6 @@
 
 import 'exporter.dart';
+import 'package:doctor/data_models/bottomAppBar.dart' as my;
 
 class PRE extends StatelessWidget {
   Widget widget;
@@ -8,7 +9,7 @@ class PRE extends StatelessWidget {
   Widget build(BuildContext contextPRE) {
     return Scaffold(
 
-        bottomNavigationBar: TRY2(),
+        bottomNavigationBar: TRY2() ,
 
         appBar: AppBar(
           elevation: 20,
@@ -35,21 +36,26 @@ class TRY2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-    Container(
-      height: 75,
-      child:BottomAppBar(
-        
-          child:Row(
+    AnimatedOpacity(
+      duration: Duration(milliseconds: 500),
+      opacity: context.watch<my.BottomAppBar>().isClosed ?  0 : 1,
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 500),
+        height: context.watch<my.BottomAppBar>().isClosed ? 0 : 75 ,
+        child:BottomAppBar(
+          
+            child:Row(
 
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                MyFun(Icons.home, 'Home', 0 , fun: (){ Navigator.pushNamed(context, 'home');} ),
-                MyFun(Icons.save_alt, 'Saved', 1 , fun: (){ Navigator.pushNamed(context, 'saved');} ),
-                Container(child:FloatingActionButton(onPressed: (){Navigator.pushNamed(context, 'add');},child:Icon(Icons.add,color: Colors.white,),elevation: 50,) ,),
-                MyFun(Icons.add_alert, 'Alert' , 2 , fun: (){ Navigator.pushNamed(context, 'alert');} ),
-                MyFun(Icons.menu, 'More', 3 , fun: (){Navigator.pushNamed(context, 'more');} ),
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  MyFun(Icons.home, 'Home', 0 , fun: (){ Navigator.pushNamed(context, 'home');} ),
+                  MyFun(Icons.save_alt, 'Saved', 1 , fun: (){ Navigator.pushNamed(context, 'saved');} ),
+                  Container(child:FloatingActionButton(onPressed: (){Navigator.pushNamed(context, 'add');},child:Icon(Icons.add,color: Colors.white,),elevation: 50,) ,),
+                  MyFun(Icons.add_alert, 'Alert' , 2 , fun: (){ Navigator.pushNamed(context, 'alert');} ),
+                  MyFun(Icons.menu, 'More', 3 , fun: (){Navigator.pushNamed(context, 'more');} ),
 
-          ],),
+            ],),
+        ),
       ),
     );
   }

@@ -1,7 +1,9 @@
 ﻿
+
 import 'exporter.dart';
 import 'package:doctor/data_models/notification.dart' as my;
-
+import 'package:doctor/data_models/bottomAppBar.dart' as my;
+import 'package:doctor/data_models/alert_press.dart';
 
 main() => runApp(MyApp());
 
@@ -22,6 +24,13 @@ class MyApp extends StatelessWidget {
 
         ChangeNotifierProvider(
           create: (context) => my.NotificationModel(),
+        ),
+
+        ChangeNotifierProvider(
+          create: (context) => my.BottomAppBar(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => Alert_Press()
         )
 
 
