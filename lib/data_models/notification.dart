@@ -8,7 +8,7 @@ class Notification
   final image;
   final String title , description;
   final date;
-  bool pressed=false;
+  bool isChecked;
 
   Notification ({
     this.icon,
@@ -16,7 +16,13 @@ class Notification
     this.title,
     this.description,
     this.date,
+    this.isChecked=false ,
   });
+
+  void check() => this.isChecked = true;
+
+  void unCheck() => this.isChecked = false;
+  //bool get isChecked() => isChecked;
 }
 
 
@@ -48,6 +54,25 @@ class NotificationModel extends ChangeNotifier
     notifyListeners();
   }
 
+  
+  /* ******************   CONTROL NOTIFICATIONS                ******************************************/
+  void checkNotification({Notification object,int i})     {       object != null ? object.check()   :  getNotification(i).check();   notifyListeners();}
+  void unCheckNotification({Notification object,int i})   {       object != null ? object.unCheck() :  getNotification(i).unCheck(); notifyListeners();}
+  bool isNotificationChecked({Notification object,int i}) =>  object != null ? object.isChecked :  getNotification(i).isChecked;
+
+  void checkAllNotifications()
+  {
+    _notifications.map((e) => e.check()).toList();
+    notifyListeners();
+  }
+  void unCheckAllNotifications()
+  {
+    _notifications.map((e) => e.unCheck()).toList();
+    notifyListeners();
+  }
+  /* ******************   CONTROL NOTIFICATIONS                ******************************************/
+
+
 
 
   List<Notification> _notifications = [
@@ -57,7 +82,7 @@ class NotificationModel extends ChangeNotifier
       image: AssetImage('assets/5.jpg'),
       title: 'Flutter Team',
       description: 'Your appointment with dr. Lena Swan have been Cancelled',
-      date: '15 jun'
+      date: '15 jun',
     ),
 
 
@@ -66,7 +91,7 @@ class NotificationModel extends ChangeNotifier
       image: AssetImage('assets/2.jpg'),
       title: 'Flutter Team',
       description: 'Your appointment with dr. sherif have been Confirmed',
-      date: '23 may'
+      date: '23 may',
     ),
 
 
@@ -75,7 +100,7 @@ class NotificationModel extends ChangeNotifier
       image: AssetImage('assets/2.jpg'),
       title: 'dr. sherif',
       description: 'dr. sherif Added new certificates to his acount',
-      date: '7 jan'
+      date: '7 jan',
     ),
 
 
@@ -84,7 +109,7 @@ class NotificationModel extends ChangeNotifier
       image: AssetImage('assets/2.jpg'),
       title: 'dr. mohammed',
       description: 'dr. mohammed have got his Phd in medicine',
-      date: '01 july'
+      date: '01 july',
     ),
 
 
@@ -127,7 +152,7 @@ class NotificationModel extends ChangeNotifier
     Notification(
       icon: Icon(Icons.check_box),
       image: AssetImage('assets/2.jpg'),
-      title: 'Lena Swan',
+      title: 'abdo',
       description: 'it has been a greeat day',
       date: '15 jun'
     ),
@@ -136,7 +161,7 @@ class NotificationModel extends ChangeNotifier
     Notification(
       icon: Icon(Icons.check_box),
       image: AssetImage('assets/2.jpg'),
-      title: 'Lena Swan',
+      title: 'Nahiueb',
       description: 'it has been a greeat day',
       date: '15 jun'
     ),
@@ -145,10 +170,49 @@ class NotificationModel extends ChangeNotifier
     Notification(
       icon: Icon(Icons.check_box),
       image: AssetImage('assets/2.jpg'),
-      title: 'Lena Swan',
+      title: 'swesan',
       description: 'it has been a greeat day',
       date: '15 jun'
     ),
+
+
+    Notification(
+      icon: Icon(Icons.check_box),
+      image: AssetImage('assets/2.jpg'),
+      title: 'friad',
+      description: 'it has been a greeat day',
+      date: '15 jun'
+    ),
+
+
+    Notification(
+      icon: Icon(Icons.check_box),
+      image: AssetImage('assets/2.jpg'),
+      title: 'nono',
+      description: 'it has been a greeat day',
+      date: '15 jun',
+    ),
+
+
+    Notification(
+      icon: Icon(Icons.check_box),
+      image: AssetImage('assets/2.jpg'),
+      title: 'mohamed',
+      description: 'it has been a greeat day',
+      date: '15 jun'
+    ),
+
+
+    Notification(
+      icon: Icon(Icons.check_box),
+      image: AssetImage('assets/2.jpg'),
+      title: 'hoho',
+      description: 'it has been a greeat day',
+      date: '15 jun'
+    ),
+
+
+
   ];
 
 }

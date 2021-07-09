@@ -4,16 +4,20 @@ import 'package:flutter/foundation.dart';
 
 class BottomAppBar extends ChangeNotifier
 {
-  bool isClosed = false;
+  bool _isClosed = false;
   
+  bool isClosed()
+  {
+    return _isClosed;
+  }
   void close()
   {
-    isClosed = true;
+    _isClosed = true;
     notifyListeners();
   }
   void open()
   {
-    isClosed = false;
+    _isClosed = false;
     notifyListeners();
   }
 }

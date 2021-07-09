@@ -3,6 +3,7 @@ import 'package:doctor/exporter.dart';
 import 'package:doctor/data_models/notification.dart' as my;
 import 'package:doctor/data_models/bottomAppBar.dart' as my;
 import 'package:doctor/data_models/alert_press.dart';
+import 'package:doctor/data_models/myBottomSheet.dart';
 
 class Alert extends StatelessWidget {
 
@@ -16,7 +17,7 @@ class Alert extends StatelessWidget {
           {
             my.Notification notification =  context.watch<my.NotificationModel>().getNotification( i );
 
-            return _MyCard( notification );
+            return Container(child: _MyCard( notification ));
 
           } ,
         ),
@@ -24,6 +25,120 @@ class Alert extends StatelessWidget {
 
   }
 }
+
+/*
+void try1(BuildContext context)
+{
+  if ( context.read<Alert_Press>().tmp == 0 )
+  {
+    
+      context.read<Alert_Press>().tmp++;
+      context.read<my.BottomAppBar>().close();
+      Future.delayed(Duration(milliseconds: 500)).then((value) => context.read<Alert_Press>().open() );
+      
+        Scaffold.of(context).showBottomSheet( (context){
+
+          return AnimatedContainer(
+            duration: Duration(milliseconds: 500),
+            height: context.watch<Alert_Press>().isListViewPressed ? 75 : 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround ,
+              children:[
+                TextButton(
+                  child:Text('Confirm'),
+                  onPressed: (){
+                  },
+                ),
+                TextButton(
+                  child:Text('Cancel'),
+                  onPressed: (){
+                    //liftStateUp();
+                    Navigator.pop(context);
+                  },
+                ),
+              ]
+            ),
+          );
+
+        });
+
+
+
+  }
+  else
+  {
+    context.read<Alert_Press>().tmp++;
+  }
+
+
+  if ( context.read<Alert_Press>().isListViewPressed  )
+  { print('isListViewPressed = true');
+    context.read<my.BottomAppBar>().close();
+    Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<Alert_Press>().open() );
+    Future.delayed(Duration(milliseconds: 1001)).then( (value) => context.read<Alert_Press>().toggle() );
+  }
+  else if ( context.read<Alert_Press>().tmp++ !=1 )
+  { print('isListViewPressed = false');
+    context.read<Alert_Press>().close();
+    Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<my.BottomAppBar>().open() ); 
+    Future.delayed(Duration(milliseconds: 1001)).then( (value)=> context.read<Alert_Press>().toggle() );
+  }
+
+}
+*/
+
+
+
+
+void try2(BuildContext context)
+{
+
+
+    if ( context.read<MyBottomSheet>().isClosed() )
+    {
+      context.read<my.BottomAppBar>().close();
+      Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<MyBottomSheet>().open() );
+    }
+    else
+    {
+      context.read<MyBottomSheet>().close();
+      Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<my.BottomAppBar>().open() );
+    }
+
+
+      if ( context.read<MyBottomSheet>().count ==0 )
+      { context.read<MyBottomSheet>().count ++;
+        Scaffold.of(context).showBottomSheet( (context){
+
+          return AnimatedContainer(
+            duration: Duration(milliseconds: 500),
+            height: context.watch<MyBottomSheet>().isClosed() ? 0 : 75,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround ,
+              children:[
+                TextButton(
+                  child:Text('Confirm'),
+                  onPressed: (){
+                    context.read<my.NotificationModel>().checkAllNotifications();
+                  },
+                ),
+                TextButton(
+                  child:Text('Cancel'),
+                  onPressed: (){
+                    //liftStateUp();
+                    //Navigator.pop(context);
+                    context.read<my.NotificationModel>().unCheckAllNotifications();
+                  },
+                ),
+              ]
+            ),
+          );
+
+        });
+      }
+            
+}
+
 
 
 
@@ -46,63 +161,9 @@ class _MyCard extends StatelessWidget {
             },
             onLongPress: (){
 
-                  if ( context.read<Alert_Press>().tmp == 0 )
-                  {
-                   
-                      context.read<Alert_Press>().tmp++;
-                      context.read<my.BottomAppBar>().close();
-                      Future.delayed(Duration(milliseconds: 500)).then((value) => context.read<Alert_Press>().open() );
-                      
-                        Scaffold.of(context).showBottomSheet( (context){
-
-                          return AnimatedContainer(
-                            duration: Duration(milliseconds: 500),
-                            height: context.watch<Alert_Press>().isListViewPressed ? 75 : 0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround ,
-                              children:[
-                                TextButton(
-                                  child:Text('Confirm'),
-                                  onPressed: (){
-                                  },
-                                ),
-                                TextButton(
-                                  child:Text('Cancel'),
-                                  onPressed: (){
-                                    //liftStateUp();
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ]
-                            ),
-                          );
-
-                        });
-
-
-
-                  }
-                  else
-                  {
-                    context.read<Alert_Press>().tmp++;
-                  }
-
-
-              if ( context.read<Alert_Press>().isListViewPressed  )
-              {print('1');
-                context.read<my.BottomAppBar>().close();
-                Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<Alert_Press>().open() );
-                Future.delayed(Duration(milliseconds: 1001)).then( (value) => context.read<Alert_Press>().toggle() );
-              }
-              else if ( context.read<Alert_Press>().tmp++ !=1 )
-              {print('2');
-                context.read<Alert_Press>().close();
-                Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<my.BottomAppBar>().open() ); 
-                Future.delayed(Duration(milliseconds: 1001)).then( (value)=> context.read<Alert_Press>().toggle() );
-              }
-
-
-
+              //try1(context);
+              try2(context);
+              //TODO: a class
             },
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.all(Colors.white),
@@ -111,8 +172,10 @@ class _MyCard extends StatelessWidget {
               elevation: 1,
               //color: Colors.pink,
               child: Container(
-                width:  context.watch<Alert_Press>().isListViewPressed ?
-                          MediaQuery.of(context).size.width-24-60 : MediaQuery.of(context).size.width-24,
+                width:  /*context.watch<Alert_Press>().isListViewPressed ?
+                          MediaQuery.of(context).size.width-24-60 : MediaQuery.of(context).size.width-24*/ 
+                          context.watch<MyBottomSheet>().isClosed() ? MediaQuery.of(context).size.width-24 : MediaQuery.of(context).size.width-24-60,
+
                 height: 90,
                 child: ListTile(
                   leading:
@@ -139,37 +202,31 @@ class _MyCard extends StatelessWidget {
           ),
         ),
 
-        _MyCheckBox()
+        MyCheckBox(notification)
         
       ]
     );
   }
 }
 
-class _MyCheckBox extends StatefulWidget {
+class MyCheckBox extends StatelessWidget {
 
-  const _MyCheckBox();
-  @override
-  __MyCheckBoxState createState() => __MyCheckBoxState();
-}
-
-class __MyCheckBoxState extends State<_MyCheckBox> {
-
-  bool pressed = false;
+  my.Notification notification;
+  MyCheckBox(this.notification);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: context.watch<Alert_Press>().isListViewPressed ? 50 : 0,
+      width: /*context.watch<Alert_Press>().isListViewPressed ? 50 : 0*/
+                context.watch<MyBottomSheet>().isClosed() ? 0 : 50,
       child: IconButton(
-        icon: pressed ? Icon( Icons.check_box,color:Colors.blueAccent  ) : Icon( Icons.check_box_outline_blank  ),
+        icon: context.watch<my.NotificationModel>().isNotificationChecked(object: notification) ? Icon( Icons.check_box,color:Colors.blueAccent  ) : Icon( Icons.check_box_outline_blank  ),
         //color:Colors.blueAccent,
         onPressed: (){
-          print( pressed );
-          setState((){
-            pressed ? pressed = false : pressed = true;
-          });
-          print( pressed );
+            //pressed ? pressed = false : pressed = true;
+            context.read<my.NotificationModel>().isNotificationChecked(object: notification) ?
+                context.read<my.NotificationModel>().unCheckNotification(object: notification) : context.read<my.NotificationModel>().checkNotification(object: notification);
+
         },
       ),
     );

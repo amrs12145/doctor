@@ -38,10 +38,10 @@ class TRY2 extends StatelessWidget {
     return
     AnimatedOpacity(
       duration: Duration(milliseconds: 500),
-      opacity: context.watch<my.BottomAppBar>().isClosed ?  0 : 1,
+      opacity: context.watch<my.BottomAppBar>().isClosed() ?  0 : 1,
       child: AnimatedContainer(
         duration: Duration(milliseconds: 500),
-        height: context.watch<my.BottomAppBar>().isClosed ? 0 : 75 ,
+        height: context.watch<my.BottomAppBar>().isClosed() ? 0 : 75 ,
         child:BottomAppBar(
           
             child:Row(
