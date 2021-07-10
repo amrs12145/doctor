@@ -86,18 +86,22 @@ class NotificationModel extends ChangeNotifier
         if (item.isChecked) {removeNotification(item);}
     }*/
     
-    List<Notification> tmp =[];
+    //List<Notification> tmp =[];
     
     for(int i =0;i<_notifications.length;i++)
     {
       if( _notifications[i].isChecked )
-        tmp.add( _notifications[i] );
+      {
+        removeNotification( _notifications[i] );
+        i--;
+      }
+        //tmp.add( _notifications[i] );
     }
 
-    for( int i=0;i<tmp.length;i++ )
+    /*for( int i=0;i<tmp.length;i++ )
     {
       _notifications.remove(tmp[i]);
-    }
+    }*/
 
     notifyListeners();
 

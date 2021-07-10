@@ -132,17 +132,20 @@ void try2(BuildContext context)
             child: AnimatedContainer(
               duration: Duration(milliseconds: 500),
               height: context.watch<MyBottomSheet>().isClosed() ? 0 : 75,
+              decoration: BoxDecoration(
+                //border: Border.all(width: 1,color: Colors.blue  )
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround ,
                 children:[
                   TextButton(
-                    child:Text('DELETE'),
+                    child:Container(child: Text('DELETE',style: TextStyle(color: Colors.white),),padding: EdgeInsets.symmetric(vertical : 15,horizontal: 35 ), margin:EdgeInsets.only(bottom: 8)  , decoration: BoxDecoration(color: Colors.blueAccent,borderRadius: BorderRadius.circular(25), )  ),
                     onPressed: (){
                       context.read<my.NotificationModel>().deleteCheckedNotifications();
                     },
                   ),
                   TextButton(
-                    child:Text('CANCEL'),
+                    child:Container(child: Text('CANCEL',style: TextStyle(color: Colors.blueAccent),),padding: EdgeInsets.symmetric(vertical : 15,horizontal: 35 ), margin:EdgeInsets.only(bottom: 8)  , decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(25), )  ),
                     onPressed: (){
                       context.read<my.NotificationModel>().unCheckAllNotifications();
                       try2(context);
@@ -153,7 +156,7 @@ void try2(BuildContext context)
             ),
           );
 
-        });
+        }, backgroundColor: Colors.blueGrey[50].withOpacity(.7) );
       }
             
 }
@@ -241,8 +244,8 @@ class MyCheckBox extends StatelessWidget {
       width: /*context.watch<Alert_Press>().isListViewPressed ? 50 : 0*/
                 context.watch<MyBottomSheet>().isClosed() ? 0 : 50,
       child: IconButton(
-        icon: context.watch<my.NotificationModel>().isNotificationChecked(object: notification) ? Icon( Icons.check_box,color:Colors.blueAccent  ) : Icon( Icons.check_box_outline_blank  ),
-        //color:Colors.blueAccent,
+        icon:  context.watch<my.NotificationModel>().isNotificationChecked(object: notification) ? Icon(Icons.check_box_rounded,color:Colors.blueAccent,size: 28,) : Icon( Icons.check_box_outline_blank,color:Colors.blueAccent.withOpacity(.7),size: 28  ),
+        iconSize: 60,
         onPressed: (){
             //pressed ? pressed = false : pressed = true;
             context.read<my.NotificationModel>().isNotificationChecked(object: notification) ?
