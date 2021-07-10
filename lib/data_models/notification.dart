@@ -56,20 +56,55 @@ class NotificationModel extends ChangeNotifier
 
   
   /* ******************   CONTROL NOTIFICATIONS                ******************************************/
-  void checkNotification({Notification object,int i})     {       object != null ? object.check()   :  getNotification(i).check();   notifyListeners();}
-  void unCheckNotification({Notification object,int i})   {       object != null ? object.unCheck() :  getNotification(i).unCheck(); notifyListeners();}
+  void checkNotification({Notification object,int i})     {       object != null ? object.check()   :  getNotification(i).check(); notifyListeners();}
+  void unCheckNotification({Notification object,int i})   {       object != null ? object.unCheck() :  getNotification(i).unCheck(); _isAllchecked=false; notifyListeners();}
   bool isNotificationChecked({Notification object,int i}) =>  object != null ? object.isChecked :  getNotification(i).isChecked;
+
+  bool _isAllchecked =false;
+  bool get isAllchecked => _isAllchecked;
+
 
   void checkAllNotifications()
   {
     _notifications.map((e) => e.check()).toList();
+    _isAllchecked=true;
     notifyListeners();
   }
   void unCheckAllNotifications()
   {
     _notifications.map((e) => e.unCheck()).toList();
+    _isAllchecked=false;
     notifyListeners();
   }
+
+  void deleteCheckedNotifications()
+  {
+/*    _notifications.map((e) { if (e.isChecked){removeNotification(e); } } ).toList();
+
+
+    for (var item in _notifications) {
+        if (item.isChecked) {removeNotification(item);}
+    }*/
+    
+    List<Notification> tmp =[];
+    
+    for(int i =0;i<_notifications.length;i++)
+    {
+      if( _notifications[i].isChecked )
+        tmp.add( _notifications[i] );
+    }
+
+    for( int i=0;i<tmp.length;i++ )
+    {
+      _notifications.remove(tmp[i]);
+    }
+
+    notifyListeners();
+
+  }
+
+
+
   /* ******************   CONTROL NOTIFICATIONS                ******************************************/
 
 

@@ -3,6 +3,7 @@
 import 'exporter.dart';
 import 'package:doctor/data_models/notification.dart' as my;
 import 'package:doctor/data_models/bottomAppBar.dart' as my;
+import 'package:doctor/data_models/appBar.dart' as my;
 import 'package:doctor/data_models/alert_press.dart';
 import 'package:doctor/data_models/myBottomSheet.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         ),
 
         ChangeNotifierProvider(
-          create: (context) => AppBarModel(),
+          create: (context) => my.BottomAppBar(),
         ),
 
         ChangeNotifierProvider(
@@ -36,6 +37,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => MyBottomSheet()
+        ),
+        ChangeNotifierProvider(
+          create: (context) => my.AppBarModel(),
         ),
 
 

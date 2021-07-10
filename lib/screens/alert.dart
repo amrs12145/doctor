@@ -2,7 +2,7 @@
 import 'package:doctor/exporter.dart';
 import 'package:doctor/data_models/notification.dart' as my;
 import 'package:doctor/data_models/bottomAppBar.dart' as my;
-import 'package:doctor/data_models/alert_press.dart';
+import 'package:doctor/data_models/appBar.dart' as my;
 import 'package:doctor/data_models/myBottomSheet.dart';
 
 class Alert extends StatelessWidget {
@@ -12,7 +12,7 @@ class Alert extends StatelessWidget {
     return Transform.translate(
         offset: /*pressed ? Offset(-70,0) :*/ Offset(0,0) ,
         child: ListView.builder(
-          itemCount: context.read<my.NotificationModel>().getCount ,
+          itemCount: context.watch<my.NotificationModel>().getCount ,
           itemBuilder: ( context , i )
           {
             my.Notification notification =  context.watch<my.NotificationModel>().getNotification( i );
@@ -98,39 +98,58 @@ void try2(BuildContext context)
     {
       context.read<my.BottomAppBar>().close();
       Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<MyBottomSheet>().open() );
+
+      context.read<my.AppBarModel>().setLeading = IconButton( onPressed: () => 
+                    context.read<my.NotificationModel>().isAllchecked ? context.read<my.NotificationModel>().unCheckAllNotifications() : context.read<my.NotificationModel>().checkAllNotifications(),
+
+            icon:Builder(builder:(c) => Icon( c.watch<my.NotificationModel>().isAllchecked ? Icons.tab_unselected_outlined : Icons.select_all_outlined)),
+      );
+
     }
     else
     {
       context.read<MyBottomSheet>().close();
       Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<my.BottomAppBar>().open() );
+      context.read<my.AppBarModel>().setLeading = Icon(Icons.arrow_back_ios);
     }
 
-
+//        //TODO: temporarily WORKAROUND
       if ( context.read<MyBottomSheet>().count ==0 )
       { context.read<MyBottomSheet>().count ++;
+
         Scaffold.of(context).showBottomSheet( (context){
 
-          return AnimatedContainer(
-            duration: Duration(milliseconds: 500),
-            height: context.watch<MyBottomSheet>().isClosed() ? 0 : 75,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround ,
-              children:[
-                TextButton(
-                  child:Text('Confirm'),
-                  onPressed: (){
-                    context.read<my.NotificationModel>().checkAllNotifications();
-                  },
-                ),
-                TextButton(
-                  child:Text('Cancel'),
-                  onPressed: (){
-                    //liftStateUp();
-                    //Navigator.pop(context);
-                    context.read<my.NotificationModel>().unCheckAllNotifications();
-                  },
-                ),
-              ]
+          return WillPopScope(
+
+            onWillPop: () async {
+              
+              if ( !context.read<MyBottomSheet>().isClosed() )
+               context.read<my.NotificationModel>().unCheckAllNotifications();
+
+              return false;
+
+            },
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 500),
+              height: context.watch<MyBottomSheet>().isClosed() ? 0 : 75,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround ,
+                children:[
+                  TextButton(
+                    child:Text('DELETE'),
+                    onPressed: (){
+                      context.read<my.NotificationModel>().deleteCheckedNotifications();
+                    },
+                  ),
+                  TextButton(
+                    child:Text('CANCEL'),
+                    onPressed: (){
+                      context.read<my.NotificationModel>().unCheckAllNotifications();
+                      try2(context);
+                    },
+                  ),
+                ]
+              ),
             ),
           );
 
@@ -171,7 +190,8 @@ class _MyCard extends StatelessWidget {
             child: Card(
               elevation: 1,
               //color: Colors.pink,
-              child: Container(
+              child: AnimatedContainer(
+                duration: Duration(milliseconds:500),
                 width:  /*context.watch<Alert_Press>().isListViewPressed ?
                           MediaQuery.of(context).size.width-24-60 : MediaQuery.of(context).size.width-24*/ 
                           context.watch<MyBottomSheet>().isClosed() ? MediaQuery.of(context).size.width-24 : MediaQuery.of(context).size.width-24-60,
@@ -216,7 +236,8 @@ class MyCheckBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+            duration: Duration(milliseconds:500),
       width: /*context.watch<Alert_Press>().isListViewPressed ? 50 : 0*/
                 context.watch<MyBottomSheet>().isClosed() ? 0 : 50,
       child: IconButton(

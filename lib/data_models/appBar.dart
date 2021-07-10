@@ -1,44 +1,39 @@
 
-
 import 'package:doctor/exporter.dart';
-
+import 'package:flutter/foundation.dart';
 
 class AppBarModel extends ChangeNotifier
 {
-  int selected = 0;
-  MyFun active;
   
+  Widget text;
+  Widget leading;
+  List<Widget> listOfActions;
 
-  void setSelected ( int i )
+
+
+  set setText(Widget text)
   {
-    this.selected = i;
+    this.text = text;
     notifyListeners();
   }
-  void setText ( String s , MyFun o )
+
+  Widget get getText => this.text;
+
+
+  set setLeading(Widget leading)
   {
-    o.text = s;
+    this.leading = leading;
     notifyListeners();
   }
 
-  void setCurrentActive ( MyFun o )
+  Widget get getLeading => this.leading;
+
+
+  set setActions(List<Widget> listOfActions)
   {
-    active = o;
+    this.listOfActions = listOfActions;
     notifyListeners();
   }
-  
-  int get getSelected => this.selected!=null ? this.selected : -1 ;
-  String getText ( MyFun o ) => o.text;
 
-
-
-  bool isActive ( MyFun o )
-  {
-    if ( active == o  )
-      return true;
-    else
-      return false;
-  }
-
-
-
+  List<Widget> get getActions => this.listOfActions;
 }

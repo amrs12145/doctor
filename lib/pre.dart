@@ -1,6 +1,8 @@
 
 import 'exporter.dart';
 import 'package:doctor/data_models/bottomAppBar.dart' as my;
+import 'package:doctor/data_models/appBar.dart' as my;
+
 
 class PRE extends StatelessWidget {
   Widget widget;
@@ -14,12 +16,14 @@ class PRE extends StatelessWidget {
         appBar: AppBar(
           elevation: 20,
           title:Text('Profile'),
-          leading: IconButton(
-            onPressed: (){
-              contextPRE.read<AppBarModel>().setSelected( 0 );
-              Navigator.pop(contextPRE);
-            },
-            icon:Icon(Icons.more_vert), ),
+          leading: contextPRE.watch<my.AppBarModel>().getLeading ??
+              IconButton(
+                onPressed: (){
+                  contextPRE.read<my.BottomAppBar>().setSelected( 0 );
+                  Navigator.pop(contextPRE);
+                },
+                icon:Icon(Icons.menu),
+              ),
           actions: <Widget>[Container(margin: EdgeInsets.only(right: 10) ,child: Icon(Icons.search,size: 30,))],
           centerTitle: true,
         ),
@@ -100,12 +104,12 @@ class MyFun extends StatelessWidget
           //padding: EdgeInsets.all(0),
           onPressed: (){
             //fun!=null? fun() : text='Failed to call'/*Not Gonna work cuz reCalling build*/ ;
-            fun!=null? fun() : context.read<AppBarModel>().setText( 'Failed' , this ) ;
+            fun!=null? fun() : context.read<my.BottomAppBar>().setText( 'Failed' , this ) ;
             //sel =  this.myFun ;
             //setState(
               //(){
                 //selected=index;
-                context.read<AppBarModel>().setSelected( index );
+                context.read<my.BottomAppBar>().setSelected( index );
                 print(index);
                 //context.read<AppBarModel>().setCurrentActive( this );
               //});
@@ -115,9 +119,9 @@ class MyFun extends StatelessWidget
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(iconData,
-                color: context.watch<AppBarModel>().getSelected == index ?                             Colors.blue:Colors.grey,),
+                color: context.watch<my.BottomAppBar>().getSelected == index ?                             Colors.blue:Colors.grey,),
 
-              Text( context.watch<AppBarModel>().getText( this ) ,style: TextStyle( color: context.watch<AppBarModel>().isActive( this ) ?     Colors.blue:Colors.grey),)
+              Text( context.watch<my.BottomAppBar>().getText( this ) ,style: TextStyle( color: context.watch<my.BottomAppBar>().isActive( this ) ?     Colors.blue:Colors.grey),)
             ],
           ),
         )
