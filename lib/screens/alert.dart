@@ -6,11 +6,10 @@ import 'package:doctor/data_models/appBar.dart' as my;
 import 'package:doctor/data_models/myBottomSheet.dart';
 
 class Alert extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
-        offset: /*pressed ? Offset(-70,0) :*/ Offset(0,0) ,
+        offset:  Offset(0,0) ,
         child: ListView.builder(
           itemCount: context.watch<my.NotificationModel>().getCount ,
           itemBuilder: ( context , i )
@@ -141,7 +140,8 @@ void try2(BuildContext context)
                   TextButton(
                     child:Container(child: Text('DELETE',style: TextStyle(color: Colors.white),),padding: EdgeInsets.symmetric(vertical : 15,horizontal: 35 ), margin:EdgeInsets.only(bottom: 8)  , decoration: BoxDecoration(color: Colors.blueAccent,borderRadius: BorderRadius.circular(25), )  ),
                     onPressed: (){
-                      context.read<my.NotificationModel>().deleteCheckedNotifications();
+                      try2(context);
+                      Future.delayed(Duration(milliseconds: 500)).then( (value) => context.read<my.NotificationModel>().deleteCheckedNotifications() );
                     },
                   ),
                   TextButton(
@@ -189,6 +189,7 @@ class _MyCard extends StatelessWidget {
             },
             style: ButtonStyle(
               overlayColor: MaterialStateProperty.all(Colors.white),
+              padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(10,8,10,8)),
             ),
             child: Card(
               elevation: 1,
@@ -199,29 +200,29 @@ class _MyCard extends StatelessWidget {
                           MediaQuery.of(context).size.width-24-60 : MediaQuery.of(context).size.width-24*/ 
                           context.watch<MyBottomSheet>().isClosed() ? MediaQuery.of(context).size.width-24 : MediaQuery.of(context).size.width-24-60,
 
-                height: 90,
-                child: ListTile(
-                  leading:
-                    Stack(
-                      children: [
-                        Container(
-                          child: Image(
-                            image : notification.image,
-                          ),
-                          margin: EdgeInsets.only(left: 10) ,
-                        ),
-                        notification.icon,
+                height: context.watch<MyBottomSheet>().isClosed() ? 100 : 120,
 
+                child: ListTile(
+                  leading:    
+                    Container(width: 80,
+                        child: Stack(children: [
+                          Positioned(child: Container(child: Image(image : notification.image,width: 60,)),left: 20),
+                          Positioned(child: notification.icon,top:0,left:5)
+                        ]),
                         
-                      ],
-                    
-                  ),
+                    ),
+                  
                   title: Container(margin:EdgeInsets.only(top: 8 ),child: Text( notification.title, style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.bold), )),
                   subtitle: Container(margin:EdgeInsets.only(top:8,bottom: 8 ),child: Text( notification.description , style: TextStyle(color: Colors.black54,letterSpacing: 1.1  ),)),
                   trailing: Text( notification.date,style: TextStyle(color:Colors.black45,fontSize:12), ),
-                  isThreeLine: false,
+                  isThreeLine: true,
+                  contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                 ),
               ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10)
+            ),
+            margin: EdgeInsets.all(0),
           ),
         ),
 

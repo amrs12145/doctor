@@ -50,6 +50,7 @@ class NotificationModel extends ChangeNotifier
   }
   void removeNotification( Notification object )
   {
+    
     _notifications.remove( object );
     notifyListeners();
   }
