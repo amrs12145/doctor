@@ -1,4 +1,5 @@
 import '../exporter.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 BuildContext contextSCREEN1;
 
@@ -17,9 +18,9 @@ class Screen1 extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            MyIcon(Icons.call, Color(0xff008800)),
-            MyIcon(Icons.video_call, Colors.red),
-            MyIcon(Icons.mail_outline, Colors.blue),
+            MyIcon(Icons.call, Color(0xff008800),'tel:+${_people.phone}'),
+            MyIcon(Icons.open_in_browser, Colors.red,'${_people.link}'), 
+            MyIcon(Icons.mail_outline, Colors.blue,'mailto:${_people.email}'),
           ],
         ),
 
@@ -30,17 +31,17 @@ class Screen1 extends StatelessWidget {
         MyExperience(Icons.work, Colors.blue, _people.work),
         MyExperience(Icons.location_on, Colors.red, _people.gps),
         MyExperience(Icons.home, Colors.green, _people.home),
-        MyExperience(Icons.phone, Colors.black,
-            _people.phone != null ? '0${_people.phone}' : '0'),
+        MyExperience(Icons.phone, Colors.black,_people.phone != null ? '0${_people.phone}' : '0',url: 'tel:+${_people.phone}',),
 
+        SizedBox(
+          height: 20,
+        ),
 
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Achivements(Icons.school, 'Degree\'s',
-                [Color(0xff3e609c), Colors.blue[200], Color(0xff3e609c)]),
-            Achivements(Icons.people, 'Job Success',
-                [Color(0xff744367), Color(0xff1565C0), Color(0xff744367)]),
+            Achivements(Icons.school, 'Degree\'s',   [Color(0xff3e609c), Colors.blue[200], Color(0xff3e609c)]),
+            Achivements(Icons.people, 'Job Success', [Color(0xff744367), Color(0xff1565C0), Color(0xff744367)]),
           ],
         ),
         SizedBox(
@@ -109,48 +110,78 @@ class _MyCard extends StatelessWidget {
 class MyIcon extends StatelessWidget {
   IconData _iconData;
   Color _color;
-  MyIcon(this._iconData, this._color);
+  String _url;
+  MyIcon(this._iconData, this._color,this._url);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Icon(_iconData, color: _color),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(color: Colors.grey[400], blurRadius: 3, spreadRadius: 3)
-        ],
-        border: Border.all(width: 1.5, color: _color),
-        color: Colors.white,
-      ),
-      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-      padding: EdgeInsets.all(9),
+    return TextButton(
+        onPressed: () async{
+          if ( await UrlLauncher.canLaunch( _url ) ){
+            await UrlLauncher.launch( _url );
+          }
+          else{
+            throw 'Could not launch $_url';
+          }
+        },
+        child: Container(
+          child: Icon(_iconData, color: _color),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(color: Colors.grey[400], blurRadius: 3, spreadRadius: 3)
+            ],
+            border: Border.all(width: 1.5, color: _color),
+            color: Colors.white,
+          ),
+          margin: EdgeInsets.fromLTRB(13, 0, 13, 10),
+          padding: EdgeInsets.all(9),
+        ),
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero
+        )
     );
   }
 }
+
 
 class MyExperience extends StatelessWidget {
   IconData _iconData;
   Color _color;
   String _text;
-  MyExperience(this._iconData, this._color, this._text);
+  String _url;
+  MyExperience(this._iconData, this._color, this._text,{url}) : this._url=url;
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(20, 0, 0, 15),
       child: Row(
         children: <Widget>[
-          Container(
-            child: Icon(_iconData, color: _color),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: _color.withOpacity(.1),
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(width: 1, color: _color)),
+
+          TextButton(
+            onPressed: () async{
+              if( _url != null && await UrlLauncher.canLaunch(_url) )
+                UrlLauncher.launch(_url);
+              else
+                throw 'Could not launch $_url';
+            } ,
+            child: Container(
+              child: Icon(_iconData, color: _color),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: _color.withOpacity(.1),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 1, color: _color)),
+            ),
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+            )
           ),
+
           SizedBox(width: 20),
           Text(_text,
               style: TextStyle(
                 color: Colors.black.withOpacity(0.5),
               ))
+
         ],
       ),
     );

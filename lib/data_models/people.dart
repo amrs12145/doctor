@@ -3,17 +3,20 @@ import 'package:doctor/exporter.dart';
 class People {
   var image;
   int phone;
-  String name, description, work, gps, home;
+  String name, email , link , description, work, gps, home;
 
   People(
-      {
-      this.image,
-      this.name,
-      this.description = 'Professor at XYZ University\nMBBS,FCPC',
-      this.work = 'Hospital Punla Pacifica, USA.',
-      this.gps = '1736 Adams Ave, Toms River, NJ,08753',
-      this.home = '1736 Adams Ave, Toms River, NJ,08753',
-      this.phone});
+  {
+    this.image,
+    this.name,
+    this.email ='amrs12145@gmail.com',
+    this.link = 'https://flutter.dev',
+    this.description = 'Professor at XYZ University\nMBBS,FCPC',
+    this.work = 'Hospital Punla Pacifica, USA.',
+    this.gps = '1736 Adams Ave, Toms River, NJ,08753',
+    this.home = '1736 Adams Ave, Toms River, NJ,08753',
+    this.phone
+  });
 }
 
 class PeopleModel extends ChangeNotifier
