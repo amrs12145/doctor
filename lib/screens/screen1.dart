@@ -12,7 +12,7 @@ class Screen1 extends StatelessWidget {
       //Column(crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         //MyCard( NetworkImage('https://api.time.com/wp-content/uploads/2014/07/301386_full1.jpg?w=800&quality=100') ,'Dr.Alina Sticra','Professor at MIT \n California,USA' ),
-        _MyCard(_people.image, _people.name, _people.description),
+        _MyCard(_people.image, _people.name, _people.description,_people),
 
         //MyCard( AssetImage('assets/1.jpg') ,'مهندس . عمار الحمار','شاب عشريني يعشق أكل البط ومال اليتيم \nبيقول معلش وشاطر' ),
         Row(
@@ -59,7 +59,8 @@ class _MyCard extends StatelessWidget {
   var _image;
   String _name;
   String _description;
-  _MyCard(this._image, this._name, this._description);
+  People _people;
+  _MyCard(this._image, this._name, this._description,this._people);
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +73,49 @@ class _MyCard extends StatelessWidget {
             width:  170,
             height: 170 ,
           )*/
-            CircleAvatar(
-              radius: 70,
-              backgroundImage: _image,
+            InkWell(
+
+              onTap: () => showModalBottomSheet(context: context,isScrollControlled: true ,builder: (_){
+                return Container(
+                  width: MediaQuery.of(_).size.width,
+                  height: MediaQuery.of(_).size.height-50,
+                  color: Colors.black,
+                  child: Stack(
+                    children: 
+                    [
+                      Center(child: Image(image: _image,)),
+                        
+                      Padding(
+                        padding: const EdgeInsets.only(top: 35,left: 15),
+                        child: IconButton(
+                          onPressed: ()=> Navigator.of(_).pop(),
+                          icon: Icon(Icons.close,color: Colors.white,),
+                          //color:Colors.purple,
+                          iconSize: 45,
+                        ),
+                      ),
+
+                      Align(
+                        alignment: Alignment(0,.8),
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.pushNamed(_, 'more', arguments: _people ),
+                          child: Text('$_name'.split(' ')[0].toUpperCase() +' Profile'.toUpperCase(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,letterSpacing: 1.7),),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 20.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6.0)
+                            )
+                          ),
+                        )
+                      )
+                    ]
+                  ),
+                );
+              }),
+              child: CircleAvatar(
+                radius: 70,
+                backgroundImage: _image,
+              ),
             ),
             SizedBox(
               height: 5,

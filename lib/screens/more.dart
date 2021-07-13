@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import '../exporter.dart';
 
 class More extends StatelessWidget {
+  People _people;
   @override
   Widget build(BuildContext context) {
+
+    final argumentsPassed = ModalRoute.of(context).settings.arguments as People;
+    if ( argumentsPassed != null )
+      _people = argumentsPassed;
+    else
+      _people = context.read<PeopleModel>().getPeople(6);
+
     Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: Color(0xff092845),
       body: Padding(
@@ -21,16 +30,43 @@ class More extends StatelessWidget {
                   child:Text('bottomRight',style: TextStyle(color:Colors.blue,fontSize: 26.0),),
                 ),*/
 
-                Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/model.jpg'),
-                          fit: BoxFit.cover),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(50),
-                          bottomRight: Radius.circular(50))),
-                  width: size.width,
-                  height: size.height * .3,
+                InkWell(
+                  onTap: () => showModalBottomSheet(context: context,isScrollControlled: true ,builder: (_){
+                    return Container(
+                      width: MediaQuery.of(_).size.width,
+                      height: MediaQuery.of(_).size.height-50,
+                      color: Colors.black,
+                      child: Stack(
+                        children: 
+                        [
+                          Center(child: Image(image: _people.image,)),
+                            
+                          Padding(
+                            padding: const EdgeInsets.only(top: 35,left: 15),
+                            child: IconButton(
+                              onPressed: ()=> Navigator.of(_).pop(),
+                              icon: Icon(Icons.close,color: Colors.white,),
+                              //color:Colors.purple,
+                              iconSize: 45,
+                            ),
+                          ),
+
+
+                        ]
+                      ),
+                    );
+                  }),
+                  child: Container(
+                    width: size.width,
+                    height: size.height * .3,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: _people.image,
+                            fit: BoxFit.cover
+                        ),
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50),bottomRight: Radius.circular(50))
+                    ),
+                  ),
                 ),
                 Positioned(
                     left: 0,
@@ -77,7 +113,7 @@ class More extends StatelessWidget {
                   Column(
                     children: <Widget>[
                       Text(
-                        Provider.of<PeopleModel>(context).getPeople(1).name,
+                        _people.name,
                         textAlign: TextAlign.start,
                         style: TextStyle(color: Colors.white, fontSize: 26),
                       ),
