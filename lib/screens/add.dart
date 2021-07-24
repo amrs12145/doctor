@@ -51,7 +51,7 @@ class _AddState extends State<Add> {
             onPressed: () {
 
               Provider.of<PeopleModel>( context, listen: false ).addPeople(
-
+                    id: 99,
                     image: AssetImage('assets/model.jpg'),
                     name: name,
                     description: 'Description' ,

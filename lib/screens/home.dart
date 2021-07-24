@@ -32,14 +32,10 @@ class Contact extends StatelessWidget {
 
         SlideAction(
           closeOnTap: true,
-          child: TextButton(
-                  onPressed: (){
+          onTap: () => contextCONTACT.read<PeopleModel>().removePeople( this._people ),
+          child: Icon(Icons.delete),
                     //Provider.of<PeopleModel>( contextCONTACT, listen: false ).removePeople( this._people );
-                    contextCONTACT.read<PeopleModel>().removePeople( this._people );
-                  }, 
-                  child: Icon(Icons.delete) 
-                )
-
+                    //contextCONTACT.read<PeopleModel>().removePeople( this._people );
         ),
 
 

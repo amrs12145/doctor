@@ -7,4 +7,8 @@ export 'package:doctor/screens/add.dart';
 export 'package:doctor/screens/alert.dart';
 export 'screens/more.dart';
 export 'package:doctor/data_models/people.dart';
+export 'package:doctor/data_models/peopleDetails.dart';
+export 'package:doctor/data_models/alert_press.dart';
+export 'package:doctor/data_models/myBottomSheet.dart';
+export 'package:doctor/data_models/peoplePosts.dart';
 export 'package:provider/provider.dart';
