@@ -332,9 +332,9 @@ class More extends StatelessWidget {
             
 
             SliverPadding(
-              padding: const EdgeInsets.only(left:15.0),
+              padding: const EdgeInsets.only(left:15.0,bottom:33),
               sliver: SliverToBoxAdapter(
-                child:  Text('Last 5 Post',style:Theme.of(context).textTheme.headline3  ),
+                child:  Text('Last 5 Post',style:TextStyle(color:Colors.white,fontSize:30)  ),
               ),
             ),
 
@@ -439,58 +439,150 @@ class MyPosts extends StatelessWidget {
   }
 
 
+
+  Widget myComment(Comment comment , BuildContext context)
+  {
+    People commenter = context.read<PeopleModel>().getPeopleWithId(comment.commenterId);
+
+    return Container(
+        padding: const EdgeInsets.fromLTRB(15.0,55.0,15.0,0.0),
+        child: Column(
+          children: [
+
+
+            Row(children: [
+
+              CircleAvatar(
+            backgroundImage: commenter.image,
+            radius: 30,
+              ),
+              SizedBox(width: 15,),
+              Text(commenter.name + '\n@' + commenter.email.split('@')[0] ,style: TextStyle(color: Colors.grey[400]),),
+              Spacer(),
+              Text( (DateTime.now().day - comment.date.day).toString() + 'd' ,style: TextStyle(color: Colors.grey[400],fontSize: 15),),
+              Icon(Icons.keyboard_arrow_down),
+            ],),
+            
+            SizedBox(height:30),
+            Text(comment.text + '\n',style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color:Colors.white70,height: 1.6,),textAlign: TextAlign.center,),
+            
+            Divider(height: 40,thickness: 1,color:Colors.white,indent:0),
+
+
+          ],
+        )
+      );
+  }
   @override
   Widget build(BuildContext context) {
 
         return SliverList(
           delegate: SliverChildBuilderDelegate(
             (ctx,i){
-          
-              _currentPostComments.clear();
-              _posts[i].comments.forEach((key, value) => _currentPostComments.add(value) );
 
-                      return Column(children: [
-                        
-                        Row(children: [
-                          CircleAvatar(
-                            backgroundImage: _people.image,
-                            radius: 40,
+
+                      return Container(decoration: BoxDecoration(color:Colors.white.withOpacity(.15)),padding: EdgeInsets.fromLTRB(8.0,35.0,8.0,35.0),
+                        child: Column(children: [
+                          
+                          Row(children: [
+                            CircleAvatar(
+                              backgroundImage: _people.image,
+                              radius: 30,
+                            ),
+                            SizedBox(width: 15,),
+                            Text(_people.name +'\n'+_people.email,style: TextStyle(color: Colors.grey[400],height:1.8)),
+                            Spacer(),
+                            Padding(
+                              padding: const EdgeInsets.only(right:10.0),
+                              child: ElevatedButton(
+                                child: Icon(Icons.menu),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xff092845),
+                                  elevation: 8
+                                ),
+                                onPressed:()=> showBottomSheet(context: context, builder: (ctx){
+
+                                  return Container(
+                                      color: Color(0xff092845),
+                                      child: ListView(
+                                        children: [
+                                        ..._posts[i].comments.values.map( (e) => myComment(e,context) ) .toList(),
+                                        ],),
+                                  );
+
+                                }),
+                             )
+                            )
+                          ]),
+
+                          SizedBox(height:30),
+                          Text(_posts[i].text + '\n',style:TextStyle(
+                            fontSize: 30,fontWeight: FontWeight.bold,color:Colors.white,height: 1.6),textAlign: TextAlign.center,
                           ),
-                          Text(_people.name +'\n'+_people.email),
-                          Spacer(),
-                          Text('${_posts[i].date.day} / ${_posts[i].date.month}' ),
-                          Icon(Icons.menu)
-                        ]),
 
-                        Text(_posts[i].postId.toString()    + '\n'),
-                        Text(_posts[i].text                 + '\n'),
-                        Text(_posts[i].likes.toString()     + '\n'),
-                        Text(_posts[i].disLikes.toString()  + '\n'),
+                          Align(alignment:Alignment.topLeft,child: Text('${_posts[i].date.hour}:${_posts[i].date.minute} . ${_posts[i].date.day} / ${_posts[i].date.month} / ${_posts[i].date.year}' ,style: TextStyle(color:Colors.grey[400]),) ),
+                          Divider(height: 40,thickness: 1,color:Colors.white,indent:0),
+                          //Text(_posts[i].likes.toString()     + ' Likes'),
+                          //Text(_posts[i].disLikes.toString()  + ' dislikes\n'),
+                          
+                          RichText(
+                            textAlign: TextAlign.center,
+                            text:TextSpan(children: [
+                              TextSpan(text:'${_posts[i].likes}  ',            style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold) ),
+                              TextSpan(text:'Likes    ',                       style: TextStyle(color:Colors.grey) ),
+                              TextSpan(text:'${_posts[i].disLikes}  ',         style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold) ),
+                              TextSpan(text:'dislikes     ',                   style: TextStyle(color:Colors.grey) ),
+                              TextSpan(text:'${_posts[i].comments.length}  ',  style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold) ),
+                              TextSpan(text:'Comments    ',                    style: TextStyle(color:Colors.grey) ),
+                              TextSpan(text:'${_posts[i].shares}  ',           style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold) ),
+                              TextSpan(text:'Shares    ',                      style: TextStyle(color:Colors.grey) ),
+                            ],
+                            style: TextStyle(fontSize: 16)
+                            ),
+                          ),
+
+                          Divider(height: 40,thickness: 1,color:Colors.white,indent:0),
+                          Row(mainAxisAlignment:MainAxisAlignment.spaceEvenly,children: [
+
+                            InkWell(
+                              child:Icon(Icons.favorite,          size: 30, color:Colors.red[800] ),
+                              onTap: (){} 
+                            ),
+                            InkWell(
+                              child:Icon(Icons.favorite_outline,  size: 30, color:Colors.grey[400] ),
+                              onTap: (){} 
+                            ),
+                            InkWell(
+                              child:Icon(Icons.comment,           size: 30, color:Colors.grey[400] ),
+                              onTap: (){} 
+                            ),
+                            InkWell(
+                              child:Icon(Icons.share,             size: 30, color:Colors.grey[400] ),
+                              onTap: (){} 
+                            ),
+                            InkWell(
+                              child:Icon(Icons.report,            size: 30, color:Colors.black87),
+                              onTap: (){} 
+                            ),
+
+                          ],),
 
 
-                        Column(
-                          children: [
-                            ..._currentPostComments.map((e) => Text(e.text)).toList(),
 
-                            
-                            
-
-                          ],
-                        ),
-
-                        /*
-                        ListView.builder(
+                          /*
+                          ListView.builder(
 shrinkWrap: true,
-                          itemCount: _currentPostComments.length,
-                          itemBuilder: (ctx,j){
+                            itemCount: _currentPostComments.length,
+                            itemBuilder: (ctx,j){
 
-                            return Container( height:100 ,child: Text('The ${j+1} Comment is ' + _currentPostComments[j].text));
+                              return Container( height:100 ,child: Text('The ${j+1} Comment is ' + _currentPostComments[j].text));
 
-                          },
-                        )*/                  
+                            },
+                          )*/                  
 
-                        
-                      ]);
+                          
+                        ]),
+                      );
 
             },
             childCount: _posts.length,

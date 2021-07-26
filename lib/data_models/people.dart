@@ -34,6 +34,18 @@ class PeopleModel extends ChangeNotifier
     return _people[i];
   }
 
+  People getPeopleWithId( int id )
+  {
+    for( People element in _people )
+    {
+      if ( element.id == id )
+        return element;
+      continue;
+    }
+    return _people[0];
+  }
+
+
   void addPeople( { @required int id , @required var image , @required String name , String description , int phone , String home } )
   {
     _people.add(  People(

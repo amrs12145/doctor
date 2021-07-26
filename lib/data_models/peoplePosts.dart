@@ -32,6 +32,9 @@ class PostModel extends ChangeNotifier
   Map<int,Post> getPosts(int publisherId){
     return _posts[publisherId];
   }
+  int getPostsLength(int publisherId){
+    return _posts[publisherId].length;
+  }
 
   void addPost( int publisherId , int postId, String text ,DateTime date, int likes , int disLikes , int shares)
   {
