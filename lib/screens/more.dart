@@ -112,13 +112,16 @@ class More extends StatelessWidget {
                               [
                                 Center(child: Image(image: _people.image,)),
                                   
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 35,left: 15),
-                                  child: IconButton(
-                                    onPressed: ()=> Navigator.of(_).pop(),
-                                    icon: Icon(Icons.close,color: Colors.white,),
-                                    //color:Colors.purple,
-                                    iconSize: 45,
+                                Align(
+                                  alignment: Alignment.topRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 35,right: 15),
+                                    child: IconButton(
+                                      onPressed: ()=> Navigator.of(_).pop(),
+                                      icon: Icon(Icons.close,color: Colors.white,),
+                                      //color:Colors.purple,
+                                      iconSize: 50,
+                                    ),
                                   ),
                                 ),
 
@@ -446,16 +449,49 @@ class MyPosts extends StatelessWidget {
 
     return Container(
         padding: const EdgeInsets.fromLTRB(15.0,55.0,15.0,0.0),
+        //color:Colors.red,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
 
             Row(children: [
 
-              CircleAvatar(
-            backgroundImage: commenter.image,
-            radius: 30,
+              InkWell(
+                onTap: () => showModalBottomSheet(context: context,isScrollControlled: true ,builder: (_){
+                  return Container(
+                    width: MediaQuery.of(_).size.width,
+                    height: MediaQuery.of(_).size.height-50,
+                    color: Colors.black,
+                    child: Stack(
+                      children: 
+                      [
+                        Center(child: Image(image: commenter.image,)),
+                          
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 35,right: 15),
+                            child: IconButton(
+                              onPressed: ()=> Navigator.of(_).pop(),
+                              icon: Icon(Icons.close,color: Colors.white,),
+                              //color:Colors.purple,
+                              iconSize: 50,
+                            ),
+                          ),
+                        ),
+
+
+                      ]
+                    ),
+                  );
+                }),
+                child: CircleAvatar(
+                  backgroundImage: commenter.image,
+                  radius: 30,
+                ),
               ),
+
               SizedBox(width: 15,),
               Text(commenter.name + '\n@' + commenter.email.split('@')[0] ,style: TextStyle(color: Colors.grey[400]),),
               Spacer(),
@@ -464,8 +500,16 @@ class MyPosts extends StatelessWidget {
             ],),
             
             SizedBox(height:30),
-            Text(comment.text + '\n',style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color:Colors.white70,height: 1.6,),textAlign: TextAlign.center,),
-            
+            Text(comment.text + '\n',style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color:Colors.white70,height: 1.5,),textAlign: TextAlign.center,),
+
+            Row(
+              children: [
+                Text('${comment.likes} ',    style: TextStyle(color:Colors.grey,fontWeight: FontWeight.bold) ),
+                Icon(Icons.favorite,          size: 26, color:Colors.red[800] ),
+                Text('       ${comment.disLikes} ', style: TextStyle(color:Colors.grey,fontWeight: FontWeight.bold) ),
+                Icon(Icons.favorite_border,          size: 26, color:Colors.grey[400]),
+              ],
+            ),
             Divider(height: 40,thickness: 1,color:Colors.white,indent:0),
 
 
@@ -485,10 +529,43 @@ class MyPosts extends StatelessWidget {
                         child: Column(children: [
                           
                           Row(children: [
-                            CircleAvatar(
-                              backgroundImage: _people.image,
-                              radius: 30,
+
+                            InkWell(
+                              onTap: () => showModalBottomSheet(context: context,isScrollControlled: true ,builder: (_){
+                                return Container(
+                                  width: MediaQuery.of(_).size.width,
+                                  height: MediaQuery.of(_).size.height-50,
+                                  color: Colors.black,
+                                  child: Stack(
+                                    children: 
+                                    [
+                                      Center(child: Image(image: _people.image,)),
+                                        
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 35,right: 15),
+                                          child: IconButton(
+                                            onPressed: ()=> Navigator.of(_).pop(),
+                                            icon: Icon(Icons.close,color: Colors.white,),
+                                            //color:Colors.purple,
+                                            iconSize: 50,
+                                          ),
+                                        ),
+                                      ),
+
+
+                                    ]
+                                  ),
+                                );
+                              }),
+                              child: CircleAvatar(
+                                backgroundImage: _people.image,
+                                radius: 30,
+                              ),
                             ),
+
+
                             SizedBox(width: 15,),
                             Text(_people.name +'\n'+_people.email,style: TextStyle(color: Colors.grey[400],height:1.8)),
                             Spacer(),
@@ -502,13 +579,93 @@ class MyPosts extends StatelessWidget {
                                 ),
                                 onPressed:()=> showBottomSheet(context: context, builder: (ctx){
 
-                                  return Container(
+                                    return Container(
+                                      padding: const EdgeInsets.only(top:55.0,left:20,right:20,bottom:25),
                                       color: Color(0xff092845),
                                       child: ListView(
                                         children: [
-                                        ..._posts[i].comments.values.map( (e) => myComment(e,context) ) .toList(),
+                                          
+                                          Padding(
+                                            padding: const EdgeInsets.only(),
+                                            child: IconButton(
+                                              alignment: Alignment.topRight,
+                                              onPressed: ()=> Navigator.of(ctx).pop(),
+                                              icon: Icon(Icons.close,color: Colors.white,),
+                                              //color:Colors.purple,
+                                              iconSize: 60,
+                                            ),
+                                          ),
+
+                                          Row(children: [
+                                            InkWell(
+                                              onTap: () => showModalBottomSheet(context: context,isScrollControlled: true ,builder: (_){
+                                                return Container(
+                                                  width: MediaQuery.of(_).size.width,
+                                                  height: MediaQuery.of(_).size.height-50,
+                                                  color: Colors.black,
+                                                  child: Stack(
+                                                    children: 
+                                                    [
+                                                      Center(child: Image(image: _people.image,)),
+                                                        
+                                                      Align(
+                                                        alignment: Alignment.topRight,
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.only(top: 35,right: 15),
+                                                          child: IconButton(
+                                                            onPressed: ()=> Navigator.of(_).pop(),
+                                                            icon: Icon(Icons.close,color: Colors.white,),
+                                                            //color:Colors.purple,
+                                                            iconSize: 50,
+                                                          ),
+                                                        ),
+                                                      ),
+
+
+                                                    ]
+                                                  ),
+                                                );
+                                              }),
+                                              child: CircleAvatar(
+                                                backgroundImage: _people.image,
+                                                radius: 30,
+                                              ),
+                                            ),
+                                            SizedBox(width: 15,),
+                                            Text(_people.name +'\n'+_people.email,style: TextStyle(color: Colors.grey[400],height:1.8)),
+                                          ]),
+
+                                          SizedBox(height:30),
+                                          Text(_posts[i].text + '\n',style:TextStyle(
+                                            fontSize: 30,fontWeight: FontWeight.bold,color:Colors.white,height: 1.6),textAlign: TextAlign.center,
+                                          ),
+                                          Align(alignment:Alignment.topLeft,child: Text('${_posts[i].date.hour}:${_posts[i].date.minute} . ${_posts[i].date.day} / ${_posts[i].date.month} / ${_posts[i].date.year}' ,style: TextStyle(color:Colors.grey[400]),) ),
+                                          Divider(height: 40,thickness: 1,color:Colors.white,indent:0),
+                                          //Text(_posts[i].likes.toString()     + ' Likes'),
+                                          //Text(_posts[i].disLikes.toString()  + ' dislikes\n'),
+                                          
+                                          RichText(
+                                            textAlign: TextAlign.center,
+                                            text:TextSpan(children: [
+                                              TextSpan(text:'${_posts[i].likes}  ',            style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold) ),
+                                              TextSpan(text:'Likes    ',                       style: TextStyle(color:Colors.grey) ),
+                                              TextSpan(text:'${_posts[i].disLikes}  ',         style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold) ),
+                                              TextSpan(text:'dislikes     ',                   style: TextStyle(color:Colors.grey) ),
+                                              TextSpan(text:'${_posts[i].comments.length}  ',  style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold) ),
+                                              TextSpan(text:'Comments    ',                    style: TextStyle(color:Colors.grey) ),
+                                              TextSpan(text:'${_posts[i].shares}  ',           style: TextStyle(color:Colors.black,fontWeight: FontWeight.bold) ),
+                                              TextSpan(text:'Shares    ',                      style: TextStyle(color:Colors.grey) ),
+                                            ],
+                                            style: TextStyle(fontSize: 16)
+                                            ),
+                                          ),
+                                          Divider(height: 40,thickness: 1,color:Colors.white,indent:0),
+
+
+                                          ..._posts[i].comments.values.map( (e) => myComment(e,context) ) .toList(),
+
                                         ],),
-                                  );
+                                    );
 
                                 }),
                              )
