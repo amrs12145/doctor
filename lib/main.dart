@@ -1,7 +1,6 @@
 ﻿
 
 
-
 import 'exporter.dart';
 import 'package:doctor/data_models/notification.dart' as my;
 import 'package:doctor/data_models/bottomAppBar.dart' as my;
@@ -48,7 +47,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => PostModel(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PeopleTagsModel(),
+        ),
 
 
 

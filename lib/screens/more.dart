@@ -32,6 +32,12 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate
 class More extends StatelessWidget {
   People _people;
 
+
+  List<String> getTags(BuildContext context)
+  {
+    return context.watch<PeopleTagsModel>().getPeopleTags(_people.id).tags;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -301,15 +307,12 @@ class More extends StatelessWidget {
               padding: const EdgeInsets.only(right:5.0,left:5.0,bottom: 15.0),
               sliver: SliverToBoxAdapter(
                 child: Container(  height: 40,margin: EdgeInsets.only(left:10),
-                  child: ListView(
+                  child: ListView.builder(
+                    
                     scrollDirection: Axis.horizontal,
-                    children: [
-                      MySkills('Mobile Applications'),
-                      MySkills('Development'),
-                      MySkills('GlassDoor'),
-                      MySkills('Free Chips'),
-                      MySkills('FireBase'),
-                    ],
+                    itemCount: getTags(context).length ~/2 ,
+                    itemBuilder: (ctx,i) => MySkills( getTags(context)[i] ),
+
                   ),
                 ),
               ),
@@ -319,15 +322,13 @@ class More extends StatelessWidget {
               padding: const EdgeInsets.only(right:5.0,left:5.0,bottom: 25.0),
               sliver: SliverToBoxAdapter(
                 child: Container(  height: 40,margin: EdgeInsets.only(left:10),
-                  child: ListView(
+                  child: ListView.builder(
+                    
                     scrollDirection: Axis.horizontal,
-                    children: [
-                      MySkills('UX Design'),
-                      MySkills('UI Design'),
-                      MySkills('Flutter'),
-                      MySkills('Front-End Development'),
-                      MySkills('FireBase'),
-                    ],
+                    itemCount: getTags(context).length.isOdd ? (getTags(context).length+1)~/2  : (getTags(context).length~/2) ,
+
+                    itemBuilder: (ctx,i) => MySkills( getTags(context)[  i + getTags(context).length~/2  ] ),
+
                   ),
                 ),
               ),

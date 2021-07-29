@@ -11,4 +11,5 @@ export 'package:doctor/data_models/peopleDetails.dart';
 export 'package:doctor/data_models/alert_press.dart';
 export 'package:doctor/data_models/myBottomSheet.dart';
 export 'package:doctor/data_models/peoplePosts.dart';
+export 'package:doctor/data_models/peopleTags.dart';
 export 'package:provider/provider.dart';

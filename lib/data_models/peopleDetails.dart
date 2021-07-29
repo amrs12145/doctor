@@ -30,6 +30,12 @@ class PeopleDetailsModel extends ChangeNotifier
 
     notifyListeners();
   }
+  void removePeopleDetails(int id)
+  {
+    //_peopleDetails.remove(id);
+    _peopleDetails.removeWhere((key, value) => key==id);
+    notifyListeners();
+  }
 
 
   // GETTERS & SETTERS TO SUPER CLASS
@@ -80,15 +86,15 @@ class PeopleDetailsModel extends ChangeNotifier
   Map<int,PeopleDetails> _peopleDetails = <int,PeopleDetails>{
 
     5  : PeopleDetails(2280,50,4913,200,19),
-    15 : PeopleDetails(2280,50,4913,200,19),
-    4  : PeopleDetails(2280,50,4913,200,19),
-    9  : PeopleDetails(2280,50,4913,200,19),
-    1  : PeopleDetails(2280,50,4913,200,19),
-    6  : PeopleDetails(2280,50,4913,200,19),
-    2  : PeopleDetails(2280,50,4913,200,19),
-    8  : PeopleDetails(2280,50,4913,200,19),
-    3  : PeopleDetails(2280,50,4913,200,19),
-    7  : PeopleDetails(2280,50,4913,200,19),
+    10 : PeopleDetails(912,20,7410,21,120),
+    4  : PeopleDetails(150,3350,2141,194,40),
+    9  : PeopleDetails(100,20,1225,20,35),
+    1  : PeopleDetails(4910,140,1224,660,124),
+    6  : PeopleDetails(3491,76,1491,150,15),
+    2  : PeopleDetails(43,3454,9542,321,9),
+    8  : PeopleDetails(7644,88,3540,154,15),
+    3  : PeopleDetails(2280,6420,3400,331,30),
+    7  : PeopleDetails(1510,60,5501,350,160),
 
   };
 
