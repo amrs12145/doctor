@@ -98,7 +98,7 @@ class _MyCard extends StatelessWidget {
                       Align(
                         alignment: Alignment(0,.8),
                         child: ElevatedButton(
-                          onPressed: () => Navigator.pushNamed(_, 'more', arguments: _people ),
+                          onPressed: () => Navigator.pushNamed(_, Constants.moreScreen , arguments: _people ),
                           child: Text('$_name'.split(' ')[0].toUpperCase() +' Profile'.toUpperCase(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,letterSpacing: 1.7),),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 20.0),
@@ -333,7 +333,7 @@ class _FixBottomNavigationBarState extends State<FixBottomNavigationBar> {
                 MyAppBarIcon(Icons.save_alt, 'Saved', 1 ),
                 Container(child:FloatingActionButton(onPressed: (){setState((){});},child:Icon(Icons.add,color: Colors.white,)) ,),
                 MyAppBarIcon(Icons.add_alert, 'Alert' , 2),
-                MyAppBarIcon(Icons.menu, 'More', 3 , func: (){Navigator.pushNamed(context, 'more');},),
+                MyAppBarIcon(Icons.menu, 'More', 3 , func: (){Navigator.pushNamed(context, Constants.moreScreen );},),
 
 
           ],),

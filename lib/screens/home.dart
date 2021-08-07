@@ -28,7 +28,7 @@ class Contact extends StatelessWidget {
       actionPane: SlidableStrechActionPane(),
       secondaryActions: [
 
-        Container(color: Colors.green),
+        Container(color: Colors.purple),
 
         SlideAction(
           closeOnTap: true,

@@ -72,7 +72,7 @@ class PeopleModel extends ChangeNotifier
   List<People> _people = <People>[
     People(
       id: 15,
-      image: AssetImage('assets/8.jpg'),
+      image: AssetImage('assets/images/8.jpg'),
       name: 'م/ عمار الركابي',
       description: 'وصف  وصف وصصصصف',
       phone: 01286969796,
@@ -82,7 +82,7 @@ class PeopleModel extends ChangeNotifier
     ),
     People(
       id: 1,
-      image: AssetImage('assets/2.jpg'),
+      image: AssetImage('assets/images/2.jpg'),
       name: 'DR.Alina Stlera',
       description: 'Professor at XYZ University\nMBBS,FCPC',
       phone: 950 - 251 - 254,
@@ -92,7 +92,7 @@ class PeopleModel extends ChangeNotifier
     ),
     People(
       id: 2,
-      image: AssetImage('assets/3.jpg'),
+      image: AssetImage('assets/images/3.jpg'),
       name: 'Eng.Osama Elzero',
       description: 'Youtube Creator',
       phone: 018895956654,
@@ -102,7 +102,7 @@ class PeopleModel extends ChangeNotifier
     ),
     People(
       id: 3,
-      image: AssetImage('assets/4.jpg'),
+      image: AssetImage('assets/images/4.jpg'),
       name: 'Dr.Magdi Yaccoub',
       description: 'Professor at XYZ University\nMBBS,FCPC',
       work: 'Hospital Punla Pacifica, USA.',
@@ -112,7 +112,7 @@ class PeopleModel extends ChangeNotifier
     ),
     People(
       id: 4,
-      image: AssetImage('assets/5.jpg'),
+      image: AssetImage('assets/images/5.jpg'),
       name: 'Eng/ Mohamed Elsher',
       description: 'Professor at XYZ University\nMBBS,FCPC',
       phone: 950224545,
@@ -122,7 +122,7 @@ class PeopleModel extends ChangeNotifier
     ),
     People(
       id: 5,
-      image: AssetImage('assets/6.jpg'),
+      image: AssetImage('assets/images/6.jpg'),
       name: 'Eng.Amr Samy',
       description: 'Flutter Developer.',
       work: 'SIM.',
@@ -131,34 +131,34 @@ class PeopleModel extends ChangeNotifier
     ),
     People(
       id: 6,
-      image: AssetImage('assets/7.jpg'),
+      image: AssetImage('assets/images/7.jpg'),
       name: 'Lionel Messi',
       description: 'Barca Football Player',
       work: 'Catolonia.',
     ),
     People(
       id: 7,
-      image: AssetImage('assets/8.jpg'),
+      image: AssetImage('assets/images/8.jpg'),
       name: 'CR.Ronaldo',
     ),
     People(
       id: 8,
-      image: AssetImage('assets/9.jpg'),
+      image: AssetImage('assets/images/9.jpg'),
       name: 'Johny Mina',
     ),
     People(
       id: 9,
-      image: AssetImage('assets/10.jpg'),
+      image: AssetImage('assets/images/10.jpg'),
       name: 'Johny Mina',
     ),
     People(
       id: 10,
-      image: AssetImage('assets/5.jpg'),
+      image: AssetImage('assets/images/5.jpg'),
       name: 'Johny Mina',
     ),
     People(
       id: 11,
-      image: AssetImage('assets/4.jpg'),
+      image: AssetImage('assets/images/4.jpg'),
       name: 'Johny Mina',
     ),
   ];

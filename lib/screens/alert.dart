@@ -1,9 +1,9 @@
 
 import 'package:doctor/exporter.dart';
-import 'package:doctor/data_models/notification.dart' as my;
-import 'package:doctor/data_models/bottomAppBar.dart' as my;
-import 'package:doctor/data_models/appBar.dart' as my;
-import 'package:doctor/data_models/myBottomSheet.dart';
+import 'package:doctor/models/notification.dart' as my;
+import 'package:doctor/models/bottomAppBar.dart' as my;
+import 'package:doctor/models/appBar.dart' as my;
+import 'package:doctor/models/myBottomSheet.dart';
 
 class Alert extends StatelessWidget {
   @override

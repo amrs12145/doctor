@@ -2,10 +2,10 @@
 
 
 import 'exporter.dart';
-import 'package:doctor/data_models/notification.dart' as my;
-import 'package:doctor/data_models/bottomAppBar.dart' as my;
-import 'package:doctor/data_models/appBar.dart' as my;
-
+import 'package:doctor/models/notification.dart' as my;
+import 'package:doctor/models/bottomAppBar.dart' as my;
+import 'package:doctor/models/appBar.dart' as my;
+import 'screens/authentication.dart';
 
 
 
@@ -61,14 +61,15 @@ class MyApp extends StatelessWidget {
           title: 'Doctor',
           //home: PRE(Screen2()),
           debugShowCheckedModeBanner: false,
-          initialRoute: 'home',
+          initialRoute: Constants.authScreen,
 
           routes: {
-            'home':   (home) => PRE( Home() ),
-            'saved': (saved) => PRE(Saved() ),
-            'add':   (add) => Add(),
-            'alert': (alert) => PRE( Alert() ),
-            'more':  (saved) => More(),
+            Constants.homeScreen  : (_) => PRE( Home() ),
+            Constants.authScreen  : (_) => Authentication(),
+            Constants.savedScreen : (_) => PRE(Saved() ),
+            Constants.addScreen   : (_) => Add(),
+            Constants.alertScreen : (_) => PRE( Alert() ),
+            Constants.moreScreen  : (_) => More(),
 
           },
       ),
