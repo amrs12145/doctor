@@ -30,7 +30,7 @@ class SplashScreen extends StatelessWidget {
           Icon(Icons.circle_outlined , size:100,color:Color(0xff3e3b4e)),
           SizedBox(height:80),
           Expanded(
-            child: Text('Start\nYour\nadventure',
+            child: Text('Start\nYour\nAdventure',
               style: TextStyle(
                         color:Color(0xff3e3b4e),
                         fontSize:55,
@@ -42,7 +42,7 @@ class SplashScreen extends StatelessWidget {
           ),
 
           ElevatedButton(
-            onPressed: ()=> Navigator.push(context, MaterialPageRoute( builder: (context) => Scaffold(body:Login()) )),
+            onPressed: ()=> Navigator.push(context, MaterialPageRoute( builder: (context) => Login() )),
             child: Text('Log in'),
             style: ElevatedButton.styleFrom(
               //primary: Colors.white,
@@ -63,11 +63,12 @@ class SplashScreen extends StatelessWidget {
             ),
           ),
 
+
           SizedBox(height:50),
 
 
           InkWell(
-          onTap: ()=> Navigator.push(context, MaterialPageRoute( builder: (context) => Scaffold(body:SignUp()) )),
+          onTap: ()=> Navigator.push(context, MaterialPageRoute( builder: (context) => SignUp() )),
             child: RichText(
               text: TextSpan(
                 children: [
@@ -88,85 +89,101 @@ class SplashScreen extends StatelessWidget {
   }
 }
 
+
 class Login extends StatelessWidget {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children:[
+    return Scaffold(
+      //resizeToAvoidBottomInset: true,
+      body: Container(
+        color:Color(0xff464b57),
+        padding: const EdgeInsets.fromLTRB(45.0,20.0,45.0,0),
+        child: Form(
+          key: formKey,
+          child: ListView(
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            children:[
 
 
-        IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          iconSize: 35,
-          onPressed: (){
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  color:Colors.white,
+                  iconSize: 50,
+                  onPressed:() => Navigator.pop(context),
+                ),
+              ),
 
-          },
-        ),
+              SizedBox(height:65),
 
-        Text('Log In',style: TextStyle(fontFamily: 'BebasNeue',color:Colors.red,fontWeight:FontWeight.bold),),
+              Text('Log In',style: TextStyle(fontSize: 40,color:Colors.white,fontWeight:FontWeight.bold),),
 
-        TextFormField(
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.email),
-            //border: UnderlineInputBorder( borderSide:)
-            //border: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
-            enabledBorder: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
-            focusedBorder: UnderlineInputBorder( borderSide:BorderSide(color: Colors.yellow,width: 2.0) ),
+              SizedBox(height:50),
+
+
+              MyTextFormField(
+                emailController,
+                (value){
+                  if ( !value.contains('@') )return 'Enter a valid email'; return null;
+                }
+                ,'Email','enter a valid email',false,Icon(Icons.email,size:29)
+              ),
+
+              SizedBox(height: 15),
+              
+              MyTextFormField(
+                passwordController,
+                (value){
+                  if ( value.length < 8 )return 'Enter more than 8 characters'; return null;
+                }
+                ,'Email','enter a valid email',true,Icon(Icons.lock_outlined,size:29)
+              ),
+              //Text(errormessage);
+
+              SizedBox(height:60),
+
+              MyElevatedButton('Log In',
+                (){
+                  if ( formKey.currentState.validate() )
+                    Navigator.push(context, MaterialPageRoute( builder: (context) => Scaffold(body:PRE(Home())) ) );
+                }
+              ),
+
+              SizedBox(
+                height: 35,
+              ),
+              InkWell(
+                onTap: ()
+                {
+                  Navigator.push(context, MaterialPageRoute( builder: (context) => SignUp() ));
+                },
+                child: Center(
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(text:'First time here?  '),
+                        TextSpan(text:'Sign up.',style: TextStyle(color:Colors.blue)),
+                      ],
+                      style: TextStyle(),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+
+              //Spacer(),
+
+
+            ]
           ),
-          controller: emailController,
-          validator: (value){
-            if ( !value.contains('@') )
-              return 'Must enter a valid Email';
-            return null;
-          },
         ),
-
-        TextFormField(
-          decoration: InputDecoration(
-            labelText: 'Label text',
-            hintText: 'hint text',
-            contentPadding: EdgeInsets.all(20.0),
-            prefixIcon: Icon(Icons.password),
-            //border: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
-            enabledBorder: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
-            focusedBorder: UnderlineInputBorder( borderSide:BorderSide(color: Colors.yellow,width: 2.0) ),
-          ),
-          controller: emailController,
-          validator: (value){
-            if ( value.length < 8 )
-              return 'Must be more than 8 characters';
-            return null;
-          },
-        ),
-
-        //Text(errormessage);
-
-        ElevatedButton(
-          child: Text('Log in'),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute( builder: (context) => Scaffold(body:PRE(Home())) ) );
-          },
-        ),
-
-        InkWell(
-          onTap: ()=> Navigator.push(context, MaterialPageRoute( builder: (context) => Scaffold(body:SignUp()) )),
-          child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(text:'First time here?'),
-                TextSpan(text:'Sign up.'),
-              ]
-            )
-          ),
-        ),
-
-
-      ]
+      ),
     );
   }
 }
@@ -175,107 +192,211 @@ class SignUp extends StatelessWidget {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
+      body: Container(
+        color:Color(0xff464b57),
+        padding: const EdgeInsets.fromLTRB(45.0,20.0,45.0,0),
+        child: Form(
+          key: formKey,
+          child: ListView(
 
-        IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          iconSize: 35,
-          onPressed: (){
-          },
-        ),
+            children: [
 
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text('New Account'),
-            RichText(
-              text:TextSpan(
-                children: [
-                  TextSpan(text:'1',style:TextStyle(fontWeight:FontWeight.bold)),
-                  TextSpan(text:'/'),
-                  TextSpan(text:'2\n'),
-                  TextSpan(text:'STEPS'),
-                ],
-              )
-            )
-          ],
-        ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  color:Colors.white,
+                  iconSize: 50,
+                  onPressed:() => Navigator.pop(context),
+                ),
+              ),
 
-        Row(
-          children: [
+              SizedBox(height:35),
 
-            CircleAvatar(
-              child: Icon(Icons.link),
-              radius: 40,
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+
+                Text('New\nAccount',style:TextStyle(fontSize:40,fontWeight:FontWeight.bold,color:Colors.white)),
+                Spacer(),
+                RichText(
+                  text:TextSpan(
+                    children: [
+                      TextSpan(text:'1',style:TextStyle(fontWeight:FontWeight.bold,fontSize:35)),
+                      TextSpan(text:'/'),
+                      TextSpan(text:'2\n',style:TextStyle(color:Colors.grey)),
+                      TextSpan(text:'STEPS',style:TextStyle(fontSize:15)),
+                    ],
+                    style: TextStyle(fontSize:30,letterSpacing: 2)
+                  )
+                ),
+              ],
             ),
 
-            Text('Upload a profile picture \n(optional)'),
-          ],
-        ),
+            SizedBox(height:45.0),
 
-        TextFormField(
-          decoration: InputDecoration(
-            prefixIcon: Icon(Icons.email),
-            //border: UnderlineInputBorder( borderSide:)
-            //border: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
-            enabledBorder: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
-            focusedBorder: UnderlineInputBorder( borderSide:BorderSide(color: Colors.yellow,width: 2.0) ),
-          ),
-          controller: emailController,
-          validator: (value){
-            if ( !value.contains('@') )
-              return 'Must enter a valid Email';
-            return null;
-          },
-        ),
-
-        TextFormField(
-          decoration: InputDecoration(
-            labelText: 'Label text',
-            hintText: 'hint text',
-            contentPadding: EdgeInsets.all(20.0),
-            prefixIcon: Icon(Icons.password),
-            //border: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
-            enabledBorder: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
-            focusedBorder: UnderlineInputBorder( borderSide:BorderSide(color: Colors.yellow,width: 2.0) ),
-          ),
-          controller: emailController,
-          validator: (value){
-            if ( value.length < 8 )
-              return 'Must be more than 8 characters';
-            return null;
-          },
-        ),
-
-        //Text(errormessage);
-
-        ElevatedButton(
-          child: Text('Next'),
-          onPressed: (){
-
-          },
-        ),
-
-        InkWell(
-          onTap: ()=> Navigator.push(context, MaterialPageRoute( builder: (context) => Scaffold(body:Login()) )),
-          child: RichText(
-            text: TextSpan(
+            Row(
               children: [
-                TextSpan(text:'Not the first time here?'),
-                TextSpan(text:'Log in.')
-              ]
-            )
+
+                Transform.rotate(
+                  angle: 2.5 ,
+                  child: Container(
+                    child: Icon(Icons.link,color:Colors.white,size:50),
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      //backgroundColor: Colors.transparent,
+                      //color: Colors.white,
+                      border: Border.all(width: 3.0,color:Colors.white70),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                  ),
+                ),
+                SizedBox(width:35.0),
+                Text('Upload a profile picture \n(optional)',style:TextStyle(color:Colors.white70)),
+              ],
+            ),
+
+            SizedBox(height:40),
+
+
+            MyTextFormField(
+              emailController,
+              (value){
+                if ( !value.contains('@') )return 'Enter a valid email'; return null;
+              }
+              ,'Email','enter a valid email',false,Icon(Icons.email,size:29)
+            ),
+
+            MyTextFormField(
+              emailController,
+              (value){
+                if ( value.length < 8 ) return 'Enter more than 8 characters'; return null;
+              }
+              ,'Password','enter a password more than 8 characters',true,Icon(Icons.lock_outlined,size:29)
+            ),
+
+            MyTextFormField(
+              emailController,
+              (value){
+                if ( value.length < 8 ) return 'Enter more than 8 characters'; return null;
+              }
+              ,'Confirm your Password','Re-enter Your password',true,Icon(Icons.lock_outlined,size:29)
+            ),
+
+            MyTextFormField(
+              emailController,
+              (value){
+                if ( value.length < 8 ) return 'Enter more than 8 characters'; return null;
+              }
+              ,'Confirm your Password','Re-enter Your password',true,Icon(Icons.lock_outlined,size:29)
+            ),
+
+            //Text(errormessage);
+            SizedBox(height:25),
+
+            MyElevatedButton('Next',
+              (){
+                if ( formKey.currentState.validate() )
+                {
+                  print('اصبر حبه');
+                }
+              },
+            ),
+
+            SizedBox(height: 25),
+
+            InkWell(
+              onTap: ()=> Navigator.push(context, MaterialPageRoute( builder: (context) => Scaffold(body:Login()) )),
+              child: Center(
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(text:'Not the first time here?  '),
+                      TextSpan(text:'Log in.',style:TextStyle(color:Colors.white))
+                    ],
+                    style: TextStyle(color:Colors.grey),
+                  )
+                ),
+              ),
+            ),
+
+            SizedBox(height: 30,),
+
+
+            ],
           ),
         ),
+      ),
+    );
+  }
+}
 
 
-        ],
+class MyElevatedButton extends StatelessWidget {
+
+  final String _text;
+  final VoidCallback _onPressed;
+
+  const MyElevatedButton(this._text,this._onPressed);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      child: Text(_text),
+      onPressed: _onPressed,
+      style: ElevatedButton.styleFrom(
+        primary: Color(0xff21242c),
+        fixedSize: Size(MediaQuery.of(context).size.width,70),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50)
+        ),
+        textStyle: TextStyle(fontSize:27,fontWeight:FontWeight.bold),
+        elevation: 10
+      ),
+
+    );
+  }
+}
+
+class MyTextFormField extends StatelessWidget {
+
+  final TextEditingController _controller;
+  final String Function(String s) _validator;
+  final Widget _prefixIcon;
+  final String _labelText,_hintText;
+  final bool _obscureText;
+  const MyTextFormField(this._controller,this._validator,this._labelText,this._hintText,this._obscureText,this._prefixIcon);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data:Theme.of(context).copyWith(colorScheme: ThemeData().colorScheme.copyWith(primary:Color(0xff9e814b))),
+      child: TextFormField(
+        style: TextStyle(color:Colors.white,fontSize:20),
+        obscureText: _obscureText,
+        decoration: InputDecoration(
+          labelText: _labelText,
+          labelStyle: TextStyle(color:Colors.grey,fontSize:19),
+          hintText: _hintText,
+          hintStyle: TextStyle(color:Colors.black38,fontSize:19),
+          contentPadding: const EdgeInsets.all(20),
+          prefixIcon: _prefixIcon,
+          prefixStyle: TextStyle(color:Colors.purple,fontSize: 35),
+          //border: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
+          enabledBorder: UnderlineInputBorder( borderSide:BorderSide(color: Colors.grey,width: 2.0) ),
+          focusedBorder: UnderlineInputBorder( borderSide:BorderSide(color: Color(0xff9e814b),width: 2.0) ),
+        ),
+        controller: _controller,
+        validator: _validator,
       ),
     );
   }
