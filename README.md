@@ -1,19 +1,18 @@
-# doctor
+# Doctor App
 
-A new Flutter project.
 
-## Getting Started
+## SSome Screen shots of the app
+### you can find the beta version on TAGS
 
-### A Description to be added HEREEEEEEEEEEEEeee
-/**********//////////////////////////////////////////*************************************//////
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Pic 1](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/1.jpg)
+![Pic 2](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/2.jpg)
+![Pic 3](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/3.jpg)
+![Pic 4](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/4.jpg)
+![Pic 5](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/5.jpg)
+![Pic 6](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/6.jpg)
+![Pic 7](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/7.jpg)
+![Pic 8](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/8.jpg)
+![Pic 9](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/9.jpg)
+![Pic 10](https://github.com/amrs12145/doctor/tree/master/assets/screenshots/10.jpg)

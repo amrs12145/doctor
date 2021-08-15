@@ -1,6 +1,8 @@
 ﻿
 
 
+import 'package:firebase_core/firebase_core.dart';
+
 import 'exporter.dart';
 import 'package:doctor/models/notification.dart' as my;
 import 'package:doctor/models/bottomAppBar.dart' as my;
@@ -9,7 +11,11 @@ import 'screens/authentication.dart';
 
 
 
-main() => runApp(MyApp());
+  main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    runApp(MyApp());
+  }
 
 
 class MyApp extends StatelessWidget {
@@ -64,6 +70,7 @@ class MyApp extends StatelessWidget {
           initialRoute: Constants.authScreen,
 
           routes: {
+            
             Constants.homeScreen  : (_) => PRE( Home() ),
             Constants.authScreen  : (_) => Authentication(),
             Constants.savedScreen : (_) => PRE(Saved() ),
