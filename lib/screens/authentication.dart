@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+//import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -105,6 +106,12 @@ class Login extends StatelessWidget {
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+
+  void error(String s)
+  {
+    print(s);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,9 +165,29 @@ class Login extends StatelessWidget {
               SizedBox(height:60),
 
               MyElevatedButton('Log In',
-                (){
+                ()async{
                   if ( formKey.currentState.validate() )
-                    Navigator.push(context, MaterialPageRoute( builder: (context) => Scaffold(body:PRE(Home())) ) );
+                  {
+                    try{
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+
+                      Navigator.pushNamedAndRemoveUntil(context, Constants.homeScreen, (route) => false);
+                    }
+                    catch(e){
+                      if (e.code == 'invalid-email')
+                        error('Invalid Email');
+                      else if (e.code == 'user-disabled')
+                        error('User Disabled');
+                      else if (e.code == 'user-not-found')
+                        error('User not Found');
+                      else if (e.code == 'wrong-password')
+                        error('Wrong Password');
+                      else
+                        error('Actually i don\'t know the reason for that');
+                    }
+
+
+                  }
                 }
               ),
 
@@ -482,7 +509,6 @@ class FinishSignUp extends StatelessWidget {
                       
                       if ( user.user.uid != null && image != null )
                       {
-                        print('Starting......');
                         Reference ref = FirebaseStorage.instance.ref('users/ProfilePicture-${user.user.uid}');
                         await ref.putFile(File(image.path)).whenComplete(() => null);
                         String url = await ref.getDownloadURL();
@@ -495,8 +521,8 @@ class FinishSignUp extends StatelessWidget {
                           'ProfilePictureURL' : url,
                           'timeWhenCreated' : Timestamp.now()
                         });
-                        print('DOOOONE');
-                        Navigator.pushNamed(context,Constants.homeScreen);
+                        //Navigator.pushNamed(context,Constants.homeScreen);
+                        Navigator.pushReplacementNamed(context,Constants.homeScreen);
                       }
                     }
                     on FirebaseAuthException catch(e)
@@ -549,19 +575,31 @@ class FinishSignUp extends StatelessWidget {
 
 
 
-class MyElevatedButton extends StatelessWidget {
+
+class MyElevatedButton extends StatefulWidget {
 
   final String _text;
   final VoidCallback _onPressed;
 
   const MyElevatedButton(this._text,this._onPressed);
 
+  @override
+  _MyElevatedButtonState createState() => _MyElevatedButtonState();
+}
 
+class _MyElevatedButtonState extends State<MyElevatedButton> {
+
+  Widget _child;
+  
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text(_text),
-      onPressed: _onPressed,
+      child: _child ?? Text(widget._text),
+      onPressed: (){
+        _child = CircularProgressIndicator();
+        widget._onPressed();
+        setState((){});
+      },
       style: ElevatedButton.styleFrom(
         primary: Color(0xff21242c),
         fixedSize: Size(MediaQuery.of(context).size.width,70),

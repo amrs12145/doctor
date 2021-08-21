@@ -2,6 +2,7 @@
 
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'exporter.dart';
 import 'package:doctor/models/notification.dart' as my;
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
           title: 'Doctor',
           //home: PRE(Screen2()),
           debugShowCheckedModeBanner: false,
-          initialRoute: Constants.authScreen,
+          initialRoute: FirebaseAuth.instance.currentUser == null ? Constants.authScreen: Constants.homeScreen,
 
           routes: {
             
